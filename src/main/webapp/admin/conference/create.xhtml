@@ -1,0 +1,76 @@
+<ui:composition template="/WEB-INF/template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+	
+	<ui:param name="pageTitle" value="ExpensEEs" />
+	
+	<ui:define name="master">
+		
+		<div class="page-header">
+			<h1>Add Conference</h1>
+		</div>
+		
+		 <h:form id="create">
+		 	<h:messages errorClass="alert-error"/>
+		 	<fieldset>
+		 		  <h:panelGroup styleClass="form-group aw-required #{_createConferenceBeanName.valid ? '' : 'has-error'}" layout="block">
+		 		  		<h:outputLabel styleClass="control-label" value="Name:" for="createConferenceBeanName"/>
+		 		  		
+                		<h:inputText id="createConferenceBeanName" 
+                				 styleClass="form-control" 
+                				 label="Name"
+                				 binding="#{_createConferenceBeanName}"
+                				 value="#{createConferenceBean.conference.name}"
+                				 pt:required="required"
+                				 pt:placeholder="Enter the conference name"/>
+		 		  
+		 		  </h:panelGroup>
+		 		  
+		 		  
+		 		  <h:panelGroup styleClass="form-group aw-required #{_createConferenceBeanDate.valid ? '' : 'has-error'}" layout="block">
+		 		    <h:outputLabel styleClass="control-label" value="Date:" for="createConferenceBeanDate"/>
+		 		  	<h:inputText id="createConferenceBeanDate" 
+		 		  				 styleClass="form-control"
+		 		  				 pt:type="date"
+		 		  				 binding="#{_createConferenceBeanDate}"/>
+		 		  </h:panelGroup>
+		 		  
+		 		  <h:panelGroup styleClass="form-group aw-required #{_createConferenceBeanCountry.valid ? '' : 'has-error'}" layout="block">
+		 		  		<h:outputLabel styleClass="control-label" value="Country:" for="createConferenceBeanCountry"/>
+                		<h:inputText id="createConferenceBeanCountry" 
+                				 styleClass="form-control" 
+                				 label="Country"
+                				 binding="#{_createConferenceBeanCountry}"
+                				 value="#{createConferenceBean.conference.country}"
+                				 pt:required="required"
+                				 pt:placeholder="Enter the conference country"/>
+		 		  </h:panelGroup>
+		 		  
+		 		  <h:panelGroup styleClass="form-group aw-required #{_createConferenceBeanCity.valid ? '' : 'has-error'}" layout="block">
+		 		  		<h:outputLabel styleClass="control-label" value="City:" for="createConferenceBeanCity"/>
+                		<h:inputText id="createConferenceBeanCity" 
+                				 styleClass="form-control" 
+                				 label="City"
+                				 binding="#{_createConferenceBeanCity}"
+                				 value="#{createConferenceBean.conference.city}"
+                				 pt:required="required"
+                				 pt:placeholder="Enter the conference city"/>
+		 		  </h:panelGroup>
+		 		  
+		 	</fieldset>
+		 	
+		 	<button type="submit" jsf:action="#{createConferenceBean.create}" 
+					class="btn btn-primary">
+				<span class="glyphicon glyphicon-log-out"></span>Create		
+			</button>
+		 	
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

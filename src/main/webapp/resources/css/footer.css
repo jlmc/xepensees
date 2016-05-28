@@ -1,0 +1,29 @@
+@CHARSET "UTF-8";
+
+footer {
+	background-color: #292c2f;
+	box-shadow: 0 1px 1px 
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+	box-sizing: border-box;
+	width: 100%;
+	text-align: left;
+	font: bold 16px sans-serif;
+
+	padding: 40px 50px;
+	/*margin-top: 80px;*/
+}
+
+footer .footer-bock {
+	padding-top: 40px;
+	vertical-align: top; 
+}
+
+footer h3 {
+	color: #ffffff;
+	font: normal 36px 'Cookie', cursive;
+	margin: 0;
+}
+
+footer h3 span {
+	color: #5383d3;
+}

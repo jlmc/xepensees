@@ -1,0 +1,49 @@
+@CHARSET "UTF-8";
+
+.panel-table .panel-body {
+	padding: 0;
+}
+
+.panel-table .panel-body .table-bordered {
+	border-style: none;
+	margin: 0;
+}
+
+.panel-table .panel-body .table-bordered>thead>tr>th:last-of-type,
+	.panel-table .panel-body .table-bordered>tbody>tr>td:last-of-type {
+	border-right: 0px;
+}
+
+.panel-table .panel-body .table-bordered>thead>tr>th:last-of-type,
+	.panel-table .panel-body .table-bordered>tbody>tr>td:last-of-type {
+	border-right: 0px;
+}
+
+.panel-table .panel-footer .pagination {
+	margin: 0;
+}
+
+/*
+used to vertically center elements, may need modification if you're not using default sizes.
+*/
+.panel-table .panel-footer .col {
+	line-height: 34px;
+	height: 34px;
+}
+
+.panel-table .panel-heading .col h3 {
+	line-height: 30px;
+	height: 30px;
+}
+
+.panel-table .panel-body .table-bordered>tbody>tr>td {
+	line-height: 25px;
+}
+
+.fixed-table-toolbar .columns label {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.428571429;
+}

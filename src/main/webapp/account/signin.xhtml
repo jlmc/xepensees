@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html >
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+
+
+<h:head>
+	<title>x-expensees Signin</title>
+	<meta charset="utf-8" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<h:outputStylesheet library="css" name="bootstrap-social.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<h:outputStylesheet library="css" name="system.css" />
+
+	<h:outputScript library="js" name="jquery-2.1.4.min.js" />
+	<h:outputScript library="js" name="bootstrap.js" />
+
+
+
+<style type="text/css">
+#loginbox {
+	margin-top: 30px;
+}
+
+#loginbox>div:first-child {
+	padding-bottom: 10px;
+}
+
+.iconmelon {
+    display: block;
+    margin: auto;
+}
+
+#form > div {
+   margin-bottom: 25px;
+}
+
+#form > div:last-child {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+</style>
+
+</h:head>
+<h:body>
+	<main>
+	<div class="container">
+		<div id="loginbox"
+			class="mainbox col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3">
+
+<!-- 			<div class="row"> -->
+<!-- 				<div class="iconmelon"> -->
+<!-- 					<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+
+ 			<div class="panel panel-info" >
+ 				<div class="panel-heading">
+                	<div class="panel-title">x-expensEEs</div>
+                	<div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a></div>
+            	</div>  
+            	
+            	<div class="panel-body" >
+            		
+            		
+            		<form name="form" id="form" class="form-horizontal" enctype="multipart/form-data" method="POST">
+            		
+            			<div class="alert alert-danger">
+                			<a class="close" data-dismiss="alert" href="#">×</a>Incorrect Username or Password!
+            			</div>
+            		
+            		
+            			
+            			<div class="input-group">
+            				 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        	 <input id="user" type="text" class="form-control" name="user" value="" placeholder="User"/>    
+            			</div>
+            			
+            			 <div class="input-group">
+                        	<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        	<input id="password" type="password" class="form-control" name="password" placeholder="Password"/>
+                   		 </div> 
+            			
+            			
+            			
+            			<div class="input-group">
+	            			 <div class="checkbox">
+				    	    	<label>
+				    	    		<input type="checkbox" name="remember" value="1"/>  Remember me
+				    	    	</label>
+				    	     </div>
+            			</div>
+            			
+            			
+            			 <div class="form-group" style="margin-top: 10px;">
+	                        <!-- Button -->
+	                        
+	                        
+	                        
+	                        
+	                        <div class="col-sm-12 controls">
+	                        
+								<a id="btn-login" href="#" class="btn btn-success"><i class="glyphicon glyphicon-log-in"></i>   Login  </a>
+                                <a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>
+	                        
+	                        
+
+	                        
+	                        
+<!-- 	                            <button type="submit" href="#" class="btn btn-primary pull-right"><i class="glyphicon glyphicon-log-in"></i> Log in</button>                           -->
+	                        
+
+	                        </div>
+                   		 </div>
+                   		 
+                   		 
+                   		 <div class="social-login">
+	                        	<h3>...or login with:</h3>
+	                        	<div class="social-login-buttons">
+		                        	<a class="btn btn-link-1 btn-link-1-facebook" href="#">
+		                        		<i class="fa fa-facebook"></i> Facebook
+		                        	</a>
+		                        	<a class="btn btn-link-1 btn-link-1-twitter" href="#">
+		                        		<i class="fa fa-twitter"></i> Twitter
+		                        	</a>
+		                        	<a class="btn btn-link-1 btn-link-1-google-plus" href="#">
+		                        		<i class="fa fa-google-plus"></i> Google Plus
+		                        	</a>
+	                        	</div>
+	                        </div>
+            			
+            		</form>
+            	
+            	</div>
+ 			
+ 			</div>
+
+
+		</div>
+	</div>
+	</main>
+</h:body>
+
+
+
+</html>

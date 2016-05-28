@@ -1,0 +1,32 @@
+@CHARSET "ISO-8859-1";
+
+.navbar-header button {
+	color: #fff;
+}
+
+.fullscreen {
+	width: 100%;
+}
+
+main {
+	padding-top: 80px;
+	padding-bottom: 80px;
+}
+
+footer {
+	background: #333;
+	color: #fff;
+	text-align: center;
+	padding: 20px 0px;
+}
+
+.tab-pane {
+	padding: 10px 5px;
+}
+
+
+/* =============================================================================== */
+/* compoments */
+.aw-required > .control-label:after {
+	content: "*";
+}

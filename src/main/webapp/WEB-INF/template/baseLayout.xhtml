@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html >
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+
+<h:head>
+	<title>#{empty pageTitle ? 'Page Title' : pageTitle}</title>
+	<link rel="icon" href='#{resource["favicon.ico"]}'/>
+	<meta charset="utf-8" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<h:outputStylesheet library="css" name="system.css" />
+
+	<h:outputScript library="js" name="jquery-2.1.4.min.js" />
+	<h:outputScript library="js" name="bootstrap.js" />
+</h:head>
+
+
+<h:body>
+	<header>
+		<!-- 		<nav class="navbar navbar-inverse"> -->
+		<!-- 		<nav class="navbar navbar-inverse navbar-static-top"> -->
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+
+			<div class="navbar-header">
+				<a href="#home" class="navbar-brand">ExpensEEs</a>
+				<button type="button" class="navbar-toggle"
+					data-target=".navbar-collapse" data-toggle="collapse">Menu</button>
+			</div>
+
+			<div class="collapse navbar-collapse header-nav">
+				<ul class="nav navbar-nav pull-right">
+					<li><a href="#newthings">Joao Costa</a></li>
+					<li>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Navigator<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Scheduler</a></li>
+							<li><a href="#">Generator</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			
+		</nav>
+		
+	</header>
+
+	<main>
+		<div class="container-fluid">
+			<div class="row">
+			
+					<ui:insert name="left-side">
+						<div class="col-xs-12 col-md-3">
+							<div class="sidebar-nav">
+								<div class="well">
+									<ul class="nav">
+											<li class="nav-header">Reports</li>
+											<li class="active"><a href="#">New expenses</a></li>
+											<li><a href="#">View expenses</a></li>
+											<li><a href="#">Conference</a></li>
+											<li><a href="#">Reembursement</a></li>
+											<li><a href="#">User</a></li>
+									</ul>
+								</div>
+			
+							</div>
+						</div>
+					</ui:insert>
+	
+					<ui:insert name="master">
+						<div class="col-xs-12 col-sm-9 jumbotron">
+							<!-- 					<div class="jumbotron"> -->
+							<h1>
+								<ui:insert name="header" />
+							</h1>
+							<h2>
+								<ui:insert name="subheader" />
+							</h2>
+							<ui:insert name="main" />
+						</div>
+					</ui:insert>
+					
+					
+					
+			</div>
+		</div>
+	</main>
+
+	<footer>
+		<p>https://github.com/jlmc</p>
+		<p>https://twitter.com/costajlmpp</p>
+	</footer>
+
+</h:body>
+</html>

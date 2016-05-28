@@ -1,0 +1,142 @@
+package org.xine.xepensees.business.expenses.entity;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Version;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.xine.xepensees.business.persistence.control.LocalDateConverter;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@Entity
+@Table(name = "t_expense")
+public class Expense implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", updatable = false, nullable = false)
+	private Long id;
+
+	@Version
+	@Column(name = "version")
+	private int version;
+
+	@NotNull
+	@DecimalMax(value = "9999")
+	private BigDecimal amount = BigDecimal.ZERO;
+
+	@NotNull
+	private Currency currency = Currency.EURO;
+
+	@NotNull
+	private ExpenseType expenseType;
+
+	@Size(max = 5)
+	private String description;
+
+	@NotNull
+	@Convert(converter = LocalDateConverter.class)
+	private LocalDate date;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(final Long id) {
+		this.id = id;
+	}
+
+	protected int getVersion() {
+		return version;
+	}
+
+	protected void setVersion(final int version) {
+		this.version = version;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(final String description) {
+		this.description = description;
+	}
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(final LocalDate date) {
+		this.date = date;
+	}
+
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public void setAmount(final BigDecimal amount) {
+		this.amount = amount;
+	}
+
+	public Currency getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(final Currency currency) {
+		this.currency = currency;
+	}
+
+	public ExpenseType getExpenseType() {
+		return expenseType;
+	}
+
+	public void setExpenseType(final ExpenseType expenseType) {
+		this.expenseType = expenseType;
+	}
+
+	@Override
+	public String toString() {
+		return "Extense [id=" + id + ", version=" + version + ", amount=" + amount + ", description=" + description
+				+ ", date=" + date + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.id);
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Expense other = (Expense) obj;
+
+		return Objects.equals(this.id, other.id);
+	}
+
+}

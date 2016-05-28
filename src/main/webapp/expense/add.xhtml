@@ -1,0 +1,112 @@
+<ui:composition template="/WEB-INF/template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+	
+	<ui:param name="pageTitle" value="ExpensEEs" />
+
+	<ui:define name="master">
+		
+		<div class="page-header">
+			<h1>Add expense</h1>
+		</div>
+		
+		 <h:form id="create">
+		 
+		 	<h:messages errorClass="alert-error"/>
+		 
+		 	<fieldset>
+		 
+		 	    <h:panelGroup styleClass="form-group aw-required #{_reimbursementBeanReimbursementConference.valid ? '' : 'has-error'}" layout="block">
+		 	    	<h:outputLabel styleClass="control-label" 
+		 	    				   for="reimbursementBeanReimbursementConference" value="Conference:"/>
+                    <h:selectOneMenu id="reimbursementBeanReimbursementConference" pt:required="required"
+                    				 styleClass="form-control"
+                    				 binding="#{_reimbursementBeanReimbursementConference}"
+                    				 value="#{addExpenseBean.conference}">
+                     	<f:selectItem itemLabel="select one please" noSelectionOption="true" />
+                     	<f:selectItems itemLabel="#{_item}" itemValue="#{_item}"
+                                       value="#{addExpenseBean.conferences}" var="_item"/>
+                    </h:selectOneMenu>
+		 	    </h:panelGroup>
+		 	    
+		 	    <h:panelGroup styleClass="form-group aw-required #{_expenseBeanExpenseDate.valid ? '' : 'has-error'}" layout="block">
+		 	    	<h:outputLabel styleClass="control-label" 
+		 	    				   for="expenseBeanExpenseDate" value="Conference:"/>
+		 	    	<h:inputText id="expenseBeanExpenseDate"
+		 	    				binding="#{_expenseBeanExpenseDate}" 
+		 	    				 pt:type="date"
+		 	    				 value="#{addExpenseBean.extense.date}"
+		 	    				 styleClass="form-control">
+<!-- 		 	    		<f:convertDateTime pattern="MM/dd/yyyy"/> -->
+		 	    	</h:inputText>
+		 	    </h:panelGroup>
+                
+                <h:panelGroup styleClass="form-group aw-required #{_expenseBeanExpenseExpenseType.valid ? '' : 'has-error'}" layout="block">
+                	<h:outputLabel styleClass="control-label" value="Expense Type:" for="expenseBeanExpenseExpenseType"/>
+                	<h:selectOneMenu id="expenseBeanExpenseExpenseType"
+                					 styleClass="form-control"
+                					 value="#{addExpenseBean.extense.expenseType}"
+                					 binding="#{_expenseBeanExpenseExpenseType}"
+                					 pt:required="required">
+                        <f:selectItem itemDisabled="true" noSelectionOption="true"/>
+                        <f:selectItems value="#{addExpenseBean.expensesTypes}" />
+                    </h:selectOneMenu>
+                </h:panelGroup>
+                
+                <h:panelGroup styleClass="form-group aw-required #{_expenseBeanExpenseCurrency.valid ? '' : 'has-error'}" layout="block">
+	                <h:outputLabel value="Currency:" 
+	                			  for="expenseBeanExpenseCurrency" 
+	                			  styleClass="control-label" />
+                	<h:selectOneMenu id="expenseBeanExpenseCurrency" 
+                					 styleClass="form-control"
+                					 pt:required="required"
+                					 binding="#{_expenseBeanExpenseCurrency}"
+                					 value="#{addExpenseBean.extense.currency}">
+                		<f:selectItem itemDisabled="true" noSelectionOption="true"/>
+                		<f:selectItems value="#{addExpenseBean.currencies}" />
+                	</h:selectOneMenu>
+                </h:panelGroup>
+                
+                
+                <h:panelGroup styleClass="form-group aw-required #{_expenseBeanExpenseAmount.valid ? '' : 'has-error'}" layout="block">
+                	<h:outputLabel styleClass="control-label" value="Amount:" for="expenseBeanExpenseAmount"/>
+                	<h:inputText id="expenseBeanExpenseAmount" 
+                				 styleClass="form-control" 
+                				 label="Amount"
+                				 binding="#{_expenseBeanExpenseAmount}"
+                				 value="#{addExpenseBean.extense.amount}"
+                				 pt:required="required"
+                				 pt:pattern="^([1-9]\d{0,8})(\.\d{2})?$"
+                				 pt:placeholder="Enter text"/>
+                </h:panelGroup>
+                
+                 <h:panelGroup styleClass="form-group #{_expenseBeanExpenseDescription.valid ? '' : 'has-error'}" layout="block" >
+                	<h:outputLabel styleClass="control-label" value="Description:" for="expenseBeanExpenseDescription"/>
+                 	<h:inputTextarea styleClass="form-control" 
+                 					 id="expenseBeanExpenseDescription" 
+                 					 value="#{addExpenseBean.extense.description}"
+                 					 binding="#{_expenseBeanExpenseDescription}"/>
+                 </h:panelGroup>
+
+			</fieldset>
+			
+			<button type="submit" jsf:action="#{addExpenseBean.save}" 
+					class="btn btn-primary">
+				<span class="glyphicon glyphicon-log-out"></span>Log Out		
+			</button>
+			
+			
+
+
+		</h:form>
+		
+	
+	</ui:define>
+
+</ui:composition>
