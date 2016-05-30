@@ -57,7 +57,7 @@ public class User implements Serializable {
     
     @ElementCollection
     @CollectionTable(name = "t_user_roles", joinColumns = { @JoinColumn(name = "userId") })
-    private final Set<Permission> permissions = EnumSet.noneOf(Permission.class);;
+    private Set<Permission> permissions = EnumSet.noneOf(Permission.class);;
     
     protected User() {}
     
@@ -66,7 +66,7 @@ public class User implements Serializable {
 	}
 
     public Set<Permission> getPermissions() {
-		return Collections.unmodifiableSet(permissions);
+		return Collections.unmodifiableSet(this.permissions);
 	}
     
     protected void setPermissions(final Set<Permission> permissions) {
@@ -75,7 +75,7 @@ public class User implements Serializable {
 	}
     
     public Long getId() {
-		return id;
+		return this.id;
 	}
     
     public void setId(final Long id) {
@@ -83,7 +83,7 @@ public class User implements Serializable {
 	}
     
     public String getName() {
-		return name;
+		return this.name;
 	}
     
     public void setName(final String name) {
@@ -91,7 +91,7 @@ public class User implements Serializable {
 	}
     
     public String getPassword() {
-		return password;
+		return this.password;
 	}
     
     public void setPassword(final String password) {
@@ -99,7 +99,7 @@ public class User implements Serializable {
 	}
     
     public String getEmail() {
-		return email;
+		return this.email;
 	}
     
     public void setEmail(final String email) {
@@ -121,7 +121,7 @@ public class User implements Serializable {
 			return false;
 		}
         final User user = (User) o;
-        return Objects.equals(email, user.email);
+        return Objects.equals(this.email, user.email);
     }
     
     @Override
@@ -130,7 +130,7 @@ public class User implements Serializable {
    	}
     
     protected int getVersion() {
-		return version;
+		return this.version;
 	}
     
     protected void setVersion(final int version) {

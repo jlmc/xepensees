@@ -16,10 +16,24 @@
 			<h1>Profile</h1>
 		</div>
 
+
+		
 		<h:form id="create">
 
 			<fieldset>
-
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 text-center">
+						<img src="http://api.randomuser.me/portraits/men/49.jpg" alt=""
+							class="center-block img-circle img-responsive" />
+						<ul class="list-inline ratings text-center" title="Ratings">
+							<li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
+							<li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
+							<li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
+							<li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
+							<li><a href="#"><span class="fa fa-star fa-lg"></span></a></li>
+						</ul>
+					</div>
+				</div>
 
 
 				<h:panelGroup
@@ -92,6 +106,11 @@
 
 
 			</fieldset>
+			
+			<button type="submit" jsf:action="#{profileBean.update}" 
+					class="btn btn-primary">
+				<span class="glyphicon glyphicon-log-out"></span>Update		
+			</button>
 
 		</h:form>
 

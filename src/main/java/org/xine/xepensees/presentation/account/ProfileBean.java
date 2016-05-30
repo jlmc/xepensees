@@ -19,5 +19,10 @@ public class ProfileBean implements Serializable {
 	public User getUser() {
 		return this.user;
 	}
+	
+	public void update() {
+		
+		
+	}
 
 }
