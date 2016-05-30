@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.xine.xepensees.business.persistence.control.LocalDateConverter;
+import org.xine.xepensees.business.validators.control.NotBlank;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -37,6 +38,7 @@ public class Conference implements Serializable {
 	private int version;
 
 	@NotNull
+	@NotBlank
 	@Size(max = 100)
 	private String name;
 
@@ -57,7 +59,7 @@ public class Conference implements Serializable {
 	protected Conference() {}
 
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setCity(final String city) {
@@ -65,7 +67,7 @@ public class Conference implements Serializable {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(final String name) {
@@ -73,7 +75,7 @@ public class Conference implements Serializable {
 	}
 
 	public LocalDate getDate() {
-		return date;
+		return this.date;
 	}
 
 	public void setDate(final LocalDate date) {
@@ -81,7 +83,7 @@ public class Conference implements Serializable {
 	}
 
 	public String getCity() {
-		return city;
+		return this.city;
 	}
 
 	public void setCountry(final String country) {
@@ -89,7 +91,7 @@ public class Conference implements Serializable {
 	}
 
 	public String getCountry() {
-		return country;
+		return this.country;
 	}
 
 	public void setId(final Long id) {
@@ -101,7 +103,7 @@ public class Conference implements Serializable {
 	}
 
 	protected int getVersion() {
-		return version;
+		return this.version;
 	}
 
 	@Override
@@ -126,7 +128,7 @@ public class Conference implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Conference [id=" + id + ", name=" + name + "]";
+		return "Conference [id=" + this.id + ", name=" + this.name + "]";
 	}
 
 	public static Conference empty() {
