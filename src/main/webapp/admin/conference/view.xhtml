@@ -9,7 +9,7 @@
 	xmlns:jsf="http://xmlns.jcp.org/jsf">
 	
 	
-	 <f:metadata>
+	<f:metadata>
         <f:viewParam name="id" value='#{viewConferenceView.id}'/>
         <f:event type="preRenderView" listener='#{viewConferenceView.retrive}'/>
     </f:metadata>
@@ -71,10 +71,7 @@
 		 		  
 		 	</fieldset>
 		 	
-		 	<button type="submit" jsf:action="#{viewConferenceView.create}" 
-					class="btn btn-primary">
-				<span class="glyphicon glyphicon-log-out"></span>Create		
-			</button>
+		 	
 		 	
 		</h:form>
 	</ui:define>

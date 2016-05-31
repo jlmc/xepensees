@@ -8,7 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.xine.xepensees.business.conferences.boundary.ConferenceMng;
+import org.xine.xepensees.business.conferences.boundary.ConferencesMng;
 import org.xine.xepensees.business.conferences.entity.Conference;
 import org.xine.xepensees.business.conferences.entity.ConferenceFilter;
 
@@ -19,7 +19,7 @@ public class SearchConferencesBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
-	private ConferenceMng conferenceMng;
+	private ConferencesMng conferenceMng;
 
 	
 	private Collection<Conference> currentItens = Collections.emptyList();

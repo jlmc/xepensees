@@ -3,6 +3,9 @@ package org.xine.xepensees.presentation.faces.converters;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UISelectItems;
@@ -22,13 +25,16 @@ public class EntityConverter implements Converter {
 			return null;
 		}
 
-		final UISelectItems uiComponent = (UISelectItems) component.getChildren().get(0);
-
-		final Collection<?> objects = (Collection<?>) uiComponent.getValue();
-
+		Optional<UISelectItems> uiSelectItems = getUISelectItems(component);
+		
+		Collection<?> objects = uiSelectItems.
+							map(uiComponent -> (Collection<?>)uiComponent.getValue()).
+							orElse(Collections.emptyList());
+		
+		
 		final Object foundEntity = 
 				objects.stream()
-				.filter(entity -> getAsString(context, uiComponent, entity).equals(value))
+				.filter(entity -> getAsString(context, uiSelectItems.get(), entity).equals(value))
 				.findFirst()
 				.orElse(null);
 
@@ -37,6 +43,10 @@ public class EntityConverter implements Converter {
 
 	@Override
 	public String getAsString(final FacesContext context, final UIComponent component, final Object value) {
+		if (value == null) {
+			return null;
+		}
+		
 		final Field field = findEntityIdField(value);
 		return getEntityIdValue(field, value);
 	}
@@ -65,6 +75,16 @@ public class EntityConverter implements Converter {
 
 	private boolean isEmpty(final String value) {
 		return value == null || value.trim().isEmpty();
+	}
+	
+	
+	private Optional<UISelectItems> getUISelectItems(UIComponent component) {
+		List<UIComponent> childrens = component.getChildren();
+		
+		return childrens.stream().
+				filter(c -> UISelectItems.class.isAssignableFrom(c.getClass())).
+				map(c -> (UISelectItems) c).
+				findFirst();
 	}
 
 }

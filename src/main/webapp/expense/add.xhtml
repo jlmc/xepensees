@@ -28,10 +28,11 @@
                     <h:selectOneMenu id="reimbursementBeanReimbursementConference" pt:required="required"
                     				 styleClass="form-control"
                     				 binding="#{_reimbursementBeanReimbursementConference}"
-                    				 value="#{addExpenseBean.conference}">
+                    				 value="#{addExpenseBean.conference}" 
+                    				 converter="entityConverter">
                      	<f:selectItem itemLabel="select one please" noSelectionOption="true" />
-                     	<f:selectItems itemLabel="#{_item}" itemValue="#{_item}"
-                                       value="#{addExpenseBean.conferences}" var="_item"/>
+                     	<f:selectItems itemLabel="#{_item.name}" itemValue="#{_item}"
+                                       value="#{addExpenseBean.conferences}"  var="_item"/>
                     </h:selectOneMenu>
 		 	    </h:panelGroup>
 		 	    

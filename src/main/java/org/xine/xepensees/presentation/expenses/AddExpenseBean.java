@@ -1,12 +1,16 @@
 package org.xine.xepensees.presentation.expenses;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.xine.xepensees.business.conferences.boundary.ConferencesMng;
+import org.xine.xepensees.business.conferences.entity.Conference;
 import org.xine.xepensees.business.expenses.boundary.ExpensesMng;
 import org.xine.xepensees.business.expenses.entity.Currency;
 import org.xine.xepensees.business.expenses.entity.Expense;
@@ -21,23 +25,28 @@ public class AddExpenseBean implements Serializable {
 
 	@Inject
 	ExpensesMng expensesMng;
+	
+	@Inject
+	ConferencesMng conferencesMng;
 
 	@Inject
 	Messages messages;
 
 	private Expense extense;
 
-	private String conference;
-
-	private final String[] conferences = { "devoxx United Kingdom", "devoxx Belgium", "devoxx France" };
+	private Conference conference;
 
 	private final Currency[] currencies = Currency.values();
 
 	private final ExpenseType[] expensesTypes = ExpenseType.values();
+	
+	private Collection<Conference> conferences = Collections.emptyList();
+	
 
 	@PostConstruct
 	public void initialize() {
 		this.extense = new Expense();
+		this.conferences = this.conferencesMng.all();
 	}
 
 	public void save() {
@@ -55,31 +64,31 @@ public class AddExpenseBean implements Serializable {
 	}
 
 	public Expense getExtense() {
-		return extense;
+		return this.extense;
 	}
 
 	public void setExtense(final Expense extense) {
 		this.extense = extense;
 	}
 
-	public String getConference() {
-		return conference;
+	public Conference getConference() {
+		return this.conference;
 	}
 
-	public void setConference(final String conference) {
+	public void setConference(final Conference conference) {
 		this.conference = conference;
 	}
 
-	public String[] getConferences() {
-		return conferences;
+	public Collection<Conference> getConferences() {
+		return Collections.unmodifiableCollection(this.conferences);
 	}
 
 	public ExpenseType[] getExpensesTypes() {
-		return expensesTypes;
+		return this.expensesTypes;
 	}
 
 	public Currency[] getCurrencies() {
-		return currencies;
+		return this.currencies;
 	}
 
 }

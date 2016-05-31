@@ -7,7 +7,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.xine.xepensees.business.conferences.boundary.ConferenceMng;
+import org.xine.xepensees.business.conferences.boundary.ConferencesMng;
 import org.xine.xepensees.business.conferences.entity.Conference;
 import org.xine.xepensees.presentation.faces.messages.Messages;
 
@@ -20,7 +20,7 @@ public class CreateConferenceBean implements Serializable {
 	private Conference conference;
 
 	@Inject
-	private ConferenceMng conferencesMng;
+	private ConferencesMng conferencesMng;
 
 	@Inject
 	private Messages messages;
@@ -31,7 +31,7 @@ public class CreateConferenceBean implements Serializable {
 	}
 
 	public Conference getConference() {
-		return conference;
+		return this.conference;
 	}
 
 	public Object create() {

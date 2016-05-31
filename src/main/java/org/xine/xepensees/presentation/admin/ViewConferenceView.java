@@ -5,7 +5,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.xine.xepensees.business.conferences.boundary.ConferenceMng;
+import org.xine.xepensees.business.conferences.boundary.ConferencesMng;
 import org.xine.xepensees.business.conferences.entity.Conference;
 
 @Named
@@ -13,7 +13,7 @@ import org.xine.xepensees.business.conferences.entity.Conference;
 public class ViewConferenceView {
 
 	@Inject
-	private ConferenceMng conferenceMng;
+	private ConferencesMng conferencesMng;
 
 	private Long id;
 	
@@ -25,7 +25,7 @@ public class ViewConferenceView {
 	     }
 		 
 		 if ( this.id != null ) {
-			this.conference = this.conferenceMng.getConference(this.id);
+			this.conference = this.conferencesMng.getConference(this.id);
 		 }
 	}
 	

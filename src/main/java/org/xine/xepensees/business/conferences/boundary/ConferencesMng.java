@@ -12,7 +12,7 @@ import org.xine.xepensees.business.conferences.entity.Conference;
 import org.xine.xepensees.business.conferences.entity.ConferenceFilter;
 
 @Stateless
-public class ConferenceMng {
+public class ConferencesMng {
 	
 	@Inject
 	ConferencesRepository repository;
