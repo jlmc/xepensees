@@ -1,4 +1,4 @@
-package org.xine.xepensees.presentation.admin;
+package org.xine.xepensees.presentation.admin.conference;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
