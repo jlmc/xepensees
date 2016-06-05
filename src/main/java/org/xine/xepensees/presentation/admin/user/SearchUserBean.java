@@ -24,5 +24,9 @@ public class SearchUserBean implements Serializable {
 	public Collection<User> getUsers() {
 		return this.users;
 	}
+	
+	public void search() {
+		//TODO:::
+	}
 
 }
