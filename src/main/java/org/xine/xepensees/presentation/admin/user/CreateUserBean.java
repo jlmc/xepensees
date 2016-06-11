@@ -22,6 +22,6 @@ public class CreateUserBean {
 	}
 	
 	public void create() {
-		//TODO
+		System.out.println(String.format("create user: %s ", this.user.toString()) );
 	}
 }

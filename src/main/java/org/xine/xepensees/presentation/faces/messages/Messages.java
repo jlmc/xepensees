@@ -27,11 +27,11 @@ public class Messages implements Serializable {
 	}
 
 	public void addSucessMessageFlash(final String summary) {
-		this.addMessageFlash(new FacesMessage(summary));
+		addMessageFlash(new FacesMessage(summary));
 	}
 
 	public void addErrorMessageFlash(final String detail, final String summary) {
-		this.addMessageFlash(new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));
+		addMessageFlash(new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));
 	}
 
 	public void addErrorMessageFlash(final String summary) {

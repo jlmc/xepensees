@@ -7,57 +7,91 @@
 	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:jsf="http://xmlns.jcp.org/jsf">
-	
+
 	<ui:param name="pageTitle" value="ExpensEEs" />
-	
+
 	<ui:define name="master">
-		
+
 		<div class="page-header">
 			<h1>Add User</h1>
 		</div>
-		
-		 <h:form id="create">
-		 	<h:messages errorClass="alert-error"/>
-		 	
-		 	<fieldset>
-		 		<h:panelGroup styleClass="form-group aw-required #{_createUserBeanEmail.valid ? '' : 'has-error'}" layout="block">
-		 			<h:outputLabel value="Email:" for="createUserBeanEmail" styleClass="control-label"/>
-		 			<h:inputText id="createUserBeanEmail" 
-		 						binding="_createUserBeanEmail"
-		 						value="#{createUserBean.user.email}" 
-		 						label="Email" 
-		 						pt:required="required"
-                				pt:placeholder="Enter the user email"/>
-		 		</h:panelGroup>
-		 		
-		 		<h:panelGroup styleClass="form-group aw-required #{_createUserBeanName.valid ? '' : 'has-error'}" layout="block">
-		 			<h:outputLabel value="Name:" for="createUserBeanName" styleClass="control-label"/>
-		 			<h:inputText id="createUserBeanName" binding="_createUserBeanName" 
-		 						 value="#{createUserBean.user.name}" 
-		 						 label="Name" 
-		 						 pt:required="required"
-		 						 pt:placeholder="Enter the user name"/>
-		 						 
-		 		</h:panelGroup>
-		 		
-		 	
-		 	</fieldset>
-		 	
-<!-- 		 	 @NotBlank -->
-<!--     @Column(name = "email", length = 100, nullable = false) -->
-<!-- 	private String email; -->
 
-    
-<!--     @NotNull -->
-<!--     @Column(name = "password", length = 512, nullable = false) -->
-<!-- 	private String password; -->
-    
-<!--     @NotBlank -->
-<!--     @Column(name = "name", length = 100, nullable = false) -->
-<!-- 	private String name; -->
-		 	
-		 	
+		<h:form id="create">
+			<h:messages errorClass="alert-error" />
+
+			<fieldset>
+
+				<h:panelGroup
+					styleClass="form-group aw-required #{_createUserBeanName.valid ? '' : 'has-error'}"
+					layout="block">
+					<h:outputLabel styleClass="control-label" value="Name:"
+						for="createUserBeanName" />
+
+					<h:inputText id="createUserBeanName" styleClass="form-control"
+						label="Name" binding="#{_createUserBeanName}"
+						value="#{createUserBean.user.name}" pt:required="required"
+						pt:placeholder="Enter the user name" />
+
+				</h:panelGroup>
+
+				<h:panelGroup
+					styleClass="form-group aw-required #{_createUserBeanEmail.valid ? '' : 'has-error'}"
+					layout="block">
+					<h:outputLabel styleClass="control-label" value="Email:"
+						for="createUserBeanEmail" />
+					<div class="input-group">
+						<span class="input-group-addon">@</span>
+						<h:inputText id="createUserBeanEmail" styleClass="form-control"
+							label="Email" binding="#{_createUserBeanEmail}"
+							value="#{createUserBean.user.email}" />
+					</div>
+				</h:panelGroup>
+
+				<h:panelGroup
+					styleClass="form-group aw-required #{_createUserBeanPassword.valid ? '' : 'has-error'}"
+					layout="block">
+					<h:outputLabel styleClass="control-label" value="Password:"
+						for="createUserBeanPassword" />
+					<div class="input-group">
+						<span class="input-group-addon"><i
+							class="glyphicon glyphicon-lock"></i></span>
+						<h:inputSecret id="createUserBeanPassword"
+							styleClass="form-control" label="Password"
+							binding="#{_createUserBeanPassword}"
+							value="#{createUserBean.user.password}" >
+						
+						
+							<f:validator validatorId="passwordValidator" />
+							<f:attribute name="confirmation" value="#{confirmation}"/>
+						
+						</h:inputSecret>
+					</div>
+				</h:panelGroup>
+				
+				<h:panelGroup
+					styleClass="form-group aw-required #{confirmation.valid ? '' : 'has-error'}"
+					layout="block">
+					<h:outputLabel styleClass="control-label" value="Password:"
+						for="confirmationID" />
+					<div class="input-group">
+						<span class="input-group-addon"><i
+							class="glyphicon glyphicon-lock"></i></span>
+						
+						<h:inputSecret id="confirmationID"
+							styleClass="form-control" label="Password"
+							binding="#{confirmation}"
+							 />
+					</div>
+				</h:panelGroup>
+
+
+
+			</fieldset>
+
+			<h:commandButton action="#{createUserBean.create}" value="register" />
+
+
 		</h:form>
 	</ui:define>
-	
+
 </ui:composition>
