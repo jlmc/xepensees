@@ -1,4 +1,4 @@
-package org.xine.xepensees.business.user.entity;
+package org.xine.xepensees.business.users.entity;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -32,7 +32,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
     
@@ -41,7 +41,7 @@ public class User implements Serializable {
     private int version;
     
     @NotBlank
-    @Column(name = "email", length = 100, nullable = false)
+    @Column(name = "email", length = 100, nullable = false, unique=true)
 	private String email;
 
     
@@ -103,7 +103,12 @@ public class User implements Serializable {
 	}
     
     public void setEmail(final String email) {
-		this.email = email;
+    	if (email == null) {
+    		this.email = null;
+    		return;
+    	}
+    	
+		this.email = email.trim().toLowerCase();
 	}
     
     

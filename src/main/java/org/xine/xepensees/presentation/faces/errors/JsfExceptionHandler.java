@@ -1,13 +1,8 @@
 package org.xine.xepensees.presentation.faces.errors;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,29 +17,6 @@ import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
 
 public class JsfExceptionHandler extends ExceptionHandlerWrapper {
-
-	static Map<Class, String> handlerExceptions = 
-			Collections.unmodifiableMap(new HashMap<Class, String>() {
-				{
-					try {
-						final InputStream resourceStream = JsfExceptionHandler.class.getClassLoader()
-								.getResourceAsStream("jsfexceptionhandler.properties");
-						if (resourceStream != null) {
-
-							final Properties prop = new Properties();
-							prop.load(resourceStream);
-
-							for (final Entry<Object, Object> entry : prop.entrySet()) {
-								final Class<?> forName = Class.forName(String.valueOf(entry.getKey()));
-								put(forName, String.valueOf(entry.getValue()));
-							}
-					}
-					} catch (final Exception e) {
-						throw new IllegalStateException(
-								"the file 'jsfexceptionhandler.properties' is in wrong format or in the wrong place.");
-				}
-			}
-			});
 
 	private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
 
@@ -89,7 +61,7 @@ public class JsfExceptionHandler extends ExceptionHandlerWrapper {
 					addFacesErrorMessage(isHandlerException.get());
 				} else {
 					removeTheEvent = true;
-	                logger.log(Level.SEVERE, "SYSTEM ERROR: " + exceptionThrows.getMessage() + "\n"+ exceptionThrows.toString());
+	                this.logger.log(Level.SEVERE, "SYSTEM ERROR: " + exceptionThrows.getMessage() + "\n"+ exceptionThrows.toString());
 	                redirect("/error.xhtml");
 				}
 
@@ -114,18 +86,13 @@ public class JsfExceptionHandler extends ExceptionHandlerWrapper {
 	}
 
 	private Optional<Throwable> getHandlerException(final Throwable throwable) {
-		final long count = handlerExceptions.keySet().
-				stream().
-				filter(k -> k.isAssignableFrom(throwable.getClass())).
-				count();
-
-		if (count > 0) {
+		if (java.lang.IllegalArgumentException.class.isAssignableFrom(throwable.getClass())) {
 			return Optional.of((Exception) throwable);
 		} else if (throwable.getCause() != null) {
 			return getHandlerException(throwable.getCause());
 		}
-
 		return Optional.empty();
+		
 	}
 
 	private void redirect(final String uri) {

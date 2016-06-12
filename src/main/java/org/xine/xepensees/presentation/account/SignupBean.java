@@ -6,7 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
-import org.xine.xepensees.business.user.entity.User;
+import org.xine.xepensees.business.users.entity.User;
 
 @Named
 @RequestScoped

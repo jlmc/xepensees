@@ -39,7 +39,7 @@ public class ConfirmPasswordValidator implements Validator{
 		}
         
         String confirm = String.valueOf(confirmationInput.getSubmittedValue());
-		
+
         if (!isPasswordValid(password, confirm)) { 
         	confirmationInput.setValid(false);
         	

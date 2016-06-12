@@ -7,7 +7,7 @@ import java.util.Collections;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import org.xine.xepensees.business.user.entity.User;
+import org.xine.xepensees.business.users.entity.User;
 
 @Named
 @ViewScoped

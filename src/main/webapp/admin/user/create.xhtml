@@ -17,7 +17,7 @@
 		</div>
 
 		<h:form id="create">
-			<h:messages errorClass="alert-error" />
+			<h:messages id="createUserMsgs" errorClass="alert-error" />
 
 			<fieldset>
 
@@ -47,7 +47,7 @@
 					</div>
 				</h:panelGroup>
 
-				<h:panelGroup
+				<h:panelGroup id="pwdPanelGroup"
 					styleClass="form-group aw-required #{_createUserBeanPassword.valid ? '' : 'has-error'}"
 					layout="block">
 					<h:outputLabel styleClass="control-label" value="Password:"
@@ -63,15 +63,17 @@
 						
 							<f:validator validatorId="passwordValidator" />
 							<f:attribute name="confirmation" value="#{confirmation}"/>
-						
+							<!-- 	<f:ajax event="blur"  
+									execute="pwdPanelGroup pwdConfirmationPanelGroup"
+	 								render="pwdConfirmationPanelGroup pwdPanelGroup createUserMsgs" /> -->
 						</h:inputSecret>
 					</div>
 				</h:panelGroup>
 				
-				<h:panelGroup
+				<h:panelGroup id="pwdConfirmationPanelGroup"
 					styleClass="form-group aw-required #{confirmation.valid ? '' : 'has-error'}"
 					layout="block">
-					<h:outputLabel styleClass="control-label" value="Password:"
+					<h:outputLabel styleClass="control-label" value="Confirm Password:"
 						for="confirmationID" />
 					<div class="input-group">
 						<span class="input-group-addon"><i
@@ -79,8 +81,12 @@
 						
 						<h:inputSecret id="confirmationID"
 							styleClass="form-control" label="Password"
-							binding="#{confirmation}"
-							 />
+							binding="#{confirmation}">
+							<!-- <f:ajax event="blur"  
+										execute="pwdPanelGroup 
+ 										pwdConfirmationPanelGroup" 
+ 										render="createUserMsgs" /> -->
+						</h:inputSecret>
 					</div>
 				</h:panelGroup>
 

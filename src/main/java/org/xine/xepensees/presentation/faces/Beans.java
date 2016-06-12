@@ -39,10 +39,8 @@ public class Beans {
 
 	    }
 	    
-	    
 	    public <T> T getBean(
 	    		Class<T> type,
-	    		//boolean optional,
 	    		Annotation... qualifiers){
 	    	
 	    	  BeanManager beanManager = getBeanManager();
@@ -59,9 +57,6 @@ public class Beans {
 		      final CreationalContext<?> context = beanManager.createCreationalContext(bean);
 		      final Object reference = beanManager.getReference(bean, type, context);
 		      return (T) reference;
-	    	  
-	    	  //return getContextualReference(type, beanManager ,beans);
 	    	}
 	    	 
-
 }
