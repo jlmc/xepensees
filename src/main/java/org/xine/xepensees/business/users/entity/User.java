@@ -57,11 +57,19 @@ public class User implements Serializable {
     
     @ElementCollection
     @CollectionTable(name = "t_user_roles", joinColumns = { @JoinColumn(name = "userId") })
-    private Set<Permission> permissions = EnumSet.noneOf(Permission.class);;
+    private Set<Permission> permissions = EnumSet.noneOf(Permission.class);
     
     protected User() {}
     
-    public void addPermission(final Permission permission) {
+    public static User of(String email, String name, String password) {
+    	User user = new User();
+    	user.setEmail(email);
+    	user.setName(name);
+    	user.setPassword(password);
+    	return user;
+    }
+    
+	public void addPermission(final Permission permission) {
     	this.permissions.add(permission);
 	}
 
@@ -102,7 +110,7 @@ public class User implements Serializable {
 		return this.email;
 	}
     
-    public void setEmail(final String email) {
+     public void setEmail(final String email) {
     	if (email == null) {
     		this.email = null;
     		return;
@@ -110,7 +118,6 @@ public class User implements Serializable {
     	
 		this.email = email.trim().toLowerCase();
 	}
-    
     
     @Override
     public int hashCode() {

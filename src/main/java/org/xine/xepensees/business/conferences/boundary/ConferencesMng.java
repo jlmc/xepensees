@@ -17,25 +17,6 @@ public class ConferencesMng {
 	@Inject
 	ConferencesRepository repository;
 
-//	AtomicLong sec = new AtomicLong(0);
-//
-//	Set <Conference> conferences = new HashSet<>();
-	
-//	@PostConstruct
-//	public void setUp() {
-//		for (int i = 0; i < 150; i++) {
-//			final Conference conference = Conference.empty();
-//
-//			final long id = this.sec.getAndIncrement();
-//			conference.setId(id);
-//			conference.setName("Abc " + id);
-//			conference.setCountry("Portugal");
-//			conference.setCity("Coimbra");
-//			conference.setDate(LocalDate.now().plusDays(id));
-//
-//			this.conferences.add(conference);
-//		}
-//	}
 
 	public Conference create(final Conference conference) {
 		if (conference == null) {
