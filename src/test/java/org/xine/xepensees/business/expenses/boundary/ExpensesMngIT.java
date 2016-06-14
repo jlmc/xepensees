@@ -13,16 +13,16 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
-import org.xine.xepensees.business.expenses.IntegrationTest;
 import org.xine.xepensees.business.expenses.entity.Currency;
 import org.xine.xepensees.business.expenses.entity.Expense;
 import org.xine.xepensees.business.expenses.entity.ExpenseType;
 import org.xine.xepensees.business.tracing.boundary.LoggerExposer;
 
-@Category(IntegrationTest.class)
+//@Category(IntegrationTest.class)
+@Ignore
 @RunWith(Arquillian.class)
 public class ExpensesMngIT {
 
