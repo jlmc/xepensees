@@ -1,5 +1,6 @@
 package org.xine.xepensees.business.users.boundary;
 
+import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -10,6 +11,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.validation.constraints.NotNull;
 
+import org.xine.xepensees.business.params.entity.QueryParameter;
 import org.xine.xepensees.business.users.control.EncryptPassword;
 import org.xine.xepensees.business.users.control.UsersRepository;
 import org.xine.xepensees.business.users.entity.User;
@@ -46,6 +48,11 @@ public class UsersManager {
 		user.setPassword(digestedPassword);
 		
 		return this.usersRepository.save(user);
+	}
+	
+	
+	public Collection<User> search(@NotNull QueryParameter query) {
+		return this.usersRepository.search(query);
 	}
 
 }

@@ -92,7 +92,7 @@ public class CriteriaHelper {
      *            the pattern the pattern to use in the operation.
      * @return the predicate
      */
-    public static Predicate ilike(final CriteriaBuilder builder, final Expression<String> path,
+    public Predicate ilike(final CriteriaBuilder builder, final Expression<String> path,
             final String pattern) {
         return ilike(builder, path, pattern, MatchMode.EXACT);
 
@@ -112,7 +112,7 @@ public class CriteriaHelper {
      *            the exact, by default is used {@code MatchMode.EXACT} .
      * @return the predicate
      */
-    public static Predicate ilike(final CriteriaBuilder builder, final Expression<String> path,
+    public Predicate ilike(final CriteriaBuilder builder, final Expression<String> path,
             final String pattern, final MatchMode exact) {
         if (pattern == null) {
             throw new IllegalArgumentException("Comparison value passed to ilike cannot be null");
