@@ -5,8 +5,11 @@ import java.util.Collection;
 import java.util.Collections;
 
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.xine.xepensees.business.params.entity.QueryParameter;
+import org.xine.xepensees.business.users.boundary.UsersManager;
 import org.xine.xepensees.business.users.entity.User;
 
 @Named
@@ -14,6 +17,9 @@ import org.xine.xepensees.business.users.entity.User;
 public class SearchUserBean implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private UsersManager usersManager;
 	
 	private Collection<User> users;
 	
@@ -26,7 +32,8 @@ public class SearchUserBean implements Serializable {
 	}
 	
 	public void search() {
-		//TODO:::
+		QueryParameter query = QueryParameter.empty().page(0, 10);
+		this.users = this.usersManager.search(query );
 	}
 
 }

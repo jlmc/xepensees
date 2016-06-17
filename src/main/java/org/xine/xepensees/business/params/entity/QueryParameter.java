@@ -14,8 +14,16 @@ public class QueryParameter implements Serializable {
 	private Integer pageLength = Integer.MAX_VALUE;
 	
 	private QueryParameter(String name, Object value) {
-		this.parameters = new HashMap<>();
+		this();
         this.parameters.put(name, value);
+	}
+	
+	private QueryParameter(){
+		this.parameters = new HashMap<>();
+	}
+	
+	public static QueryParameter empty() {
+		return new QueryParameter();
 	}
 	
 	public static QueryParameter with(String name, Object value) {

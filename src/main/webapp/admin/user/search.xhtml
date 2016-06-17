@@ -15,20 +15,53 @@
 		<div class="page-header">
 			<h1>Search User</h1>
 		</div>
-		
-		
-		
+
+
+
 		<h:form id="search">
-			<h:messages errorClass="alert-error" />
-			
-			
-			<h:commandLink action="#{searchUserBean.search}" value="Search" styleClass="btn btn-primary"/>
-			<h:link outcome="/admin/user/create" value="New User" styleClass="btn btn-primary"/>
+			<h:messages errorClass="alert-error" id="searchUserBeanErros"/>
+
+			<div class="col-md-12">
+				<h:dataTable styleClass="table" id="searchUserBeanUsers"
+					value="#{searchUserBean.users}" var="_user">
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Name " />
+						</f:facet>
+						<h:outputText value="#{_user.name}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Email" />
+						</f:facet>
+						<h:outputText value="#{_user.email}" />
+					</h:column>
+
+
+
+
+
+					<h:column>
+						<h:commandButton value="Delete" styleClass="btn btn-danger" />
+					</h:column>
+
+				</h:dataTable>
+
+			</div>
+
+
+
+			<h:commandLink action="#{searchUserBean.search}" value="Search"
+				styleClass="btn btn-primary">
+				<f:ajax render="searchUserBeanUsers searchUserBeanErros" execute="@this"/>	
+			</h:commandLink>
+			<h:link outcome="/admin/user/create" value="New User"
+				styleClass="btn btn-primary" />
 		</h:form>
-		
-		
-		
-		
+
+
+
+
 	</ui:define>
 
 </ui:composition>
