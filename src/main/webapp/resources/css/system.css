@@ -30,3 +30,22 @@ footer {
 .aw-required > .control-label:after {
 	content: "*";
 }
+
+.aw-search-area {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.aw-search-element {
+	padding: 7px;
+}
+
+ .my-group .form-control{
+    width:50%;
+}
+/*
+.aw-t label {
+	font-weight: normal !important;
+}
+*/
+

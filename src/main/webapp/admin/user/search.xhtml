@@ -16,10 +16,48 @@
 			<h1>Search User</h1>
 		</div>
 
-
+<!-- 		<h:outputLabel value="#{userBean.userName}" /> -->
 
 		<h:form id="search">
-			<h:messages errorClass="alert-error" id="searchUserBeanErros"/>
+			<h:messages errorClass="alert-error" id="searchUserBeanErros" />
+
+			<div class="row aw-search-area">
+				<div class="col-lg-6">
+					<h:link outcome="/admin/user/create" value="New User"
+						styleClass="btn btn-success">
+						<i class="glyphicon glyphicon glyphicon-user" />
+					</h:link>
+				</div>
+
+				<div class="col-lg-6">
+					<div class="input-group">
+						<div class="input-group-btn">
+							<h:selectOneMenu value="#{searchUserBean.searchFor}"
+								id="searchUserBeanSearchFor"
+								styleClass="btn btn-default dropdown-toggle aw-search-element">
+								<f:selectItem itemLabel="search for" itemValue=""
+									noSelectionOption="true" />
+								<f:selectItem itemLabel="Name" itemValue="name" />
+								<f:selectItem itemLabel="E-mail" itemValue="email" />
+							</h:selectOneMenu>
+						</div>
+
+						<h:inputText value="#{searchUserBean.searchValue}"
+							id="searchUserBeanSearchValue" styleClass="form-control"
+							pt:aria-label="..." />
+						<div class="input-group-btn">
+							<h:commandLink action="#{searchUserBean.search}"
+								styleClass="btn btn-primary">
+								<span class="glyphicon glyphicon-search" aria-hidden="true" />
+								<f:ajax render="searchUserBeanUsers searchUserBeanErros searchUserBeanPaginator"
+									execute="@this searchUserBeanSearchValue searchUserBeanSearchFor" />
+							</h:commandLink>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- end of search area -->
 
 			<div class="col-md-12">
 				<h:dataTable styleClass="table" id="searchUserBeanUsers"
@@ -36,32 +74,41 @@
 						</f:facet>
 						<h:outputText value="#{_user.email}" />
 					</h:column>
-
-
-
-
-
 					<h:column>
 						<h:commandButton value="Delete" styleClass="btn btn-danger" />
 					</h:column>
-
 				</h:dataTable>
-
 			</div>
 
-
-
-			<h:commandLink action="#{searchUserBean.search}" value="Search"
-				styleClass="btn btn-primary">
-				<f:ajax render="searchUserBeanUsers searchUserBeanErros" execute="@this"/>	
-			</h:commandLink>
-			<h:link outcome="/admin/user/create" value="New User"
-				styleClass="btn btn-primary" />
+			<div class="row">
+				<h:panelGroup id="searchUserBeanPaginator" styleClass="col-md-12">
+				
+			
+<!-- 				<div class="col-md-12"> -->
+					<ul class="pagination pull-right">
+						<li>
+							<h:commandLink action="#{searchUserBean.previous}" 
+											styleClass="previous" 
+											disabled="#{searchUserBean.pageNum eq 0}" >
+											<f:ajax execute="@form" render="@form" />
+											<i class="glyphicon glyphicon-backward"></i>
+											<span></span>
+							</h:commandLink>
+						</li>
+						<li><a href="#">#{searchUserBean.pageNum + 1}</a></li>
+						<li>
+							<h:commandLink action="#{searchUserBean.forward}" 
+													   styleClass="next">
+											<f:ajax execute="@form" render="@form" />
+											<span></span>
+											<i class="glyphicon glyphicon-forward"></i>
+							</h:commandLink>
+						</li>
+					</ul>
+<!-- 				</div> -->
+				</h:panelGroup>
+			</div>
 		</h:form>
-
-
-
-
 	</ui:define>
 
 </ui:composition>

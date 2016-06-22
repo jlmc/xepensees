@@ -26,7 +26,7 @@ public class CriteriaHelper {
      *            the typed query
      * @return the t - instance of T if exists, {@code null} otherwise.
      */
-    public static <T> T getSingleResultUncheck(final TypedQuery<T> typedQuery) {
+    public <T> T getSingleResultUncheck(final TypedQuery<T> typedQuery) {
         try {
             return typedQuery.getSingleResult();
         } catch (final NoResultException e) {

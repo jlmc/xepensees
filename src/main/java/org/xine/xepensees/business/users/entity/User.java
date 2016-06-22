@@ -10,8 +10,6 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
@@ -31,15 +29,11 @@ public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
-    private Long id;
-    
     @Version
     @Column(name = "version")
     private int version;
     
+    @Id
     @NotBlank
     @Column(name = "email", length = 100, nullable = false, unique=true)
 	private String email;
@@ -80,14 +74,6 @@ public class User implements Serializable {
     protected void setPermissions(final Set<Permission> permissions) {
     	this.permissions.clear();
 		this.permissions.addAll(permissions);
-	}
-    
-    public Long getId() {
-		return this.id;
-	}
-    
-    public void setId(final Long id) {
-		this.id = id;
 	}
     
     public String getName() {
@@ -133,7 +119,9 @@ public class User implements Serializable {
 			return false;
 		}
         final User user = (User) o;
-        return Objects.equals(this.email, user.email);
+        return Objects.equals(
+        			String.valueOf(this.email).trim().toLowerCase(), 
+        			String.valueOf(user.email).trim().toLowerCase());
     }
     
     @Override

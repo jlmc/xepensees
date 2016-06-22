@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never; 
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -47,7 +47,6 @@ public class UsersManagerTest {
 		when(this.usersRepositoryMock.save(user)).then(invocation -> {
 			User t = (User) invocation.getArguments()[0];
 			User persistedUser = User.of(t.getEmail(), t.getName(), t.getPassword());
-			persistedUser.setId(1L);
 			return persistedUser;
 		});
 		when(this.usersRepositoryMock.find("jamesgosling@javaee.com")).thenReturn(null);
@@ -58,14 +57,9 @@ public class UsersManagerTest {
 		InOrder inOrder = inOrder(this.usersRepositoryMock);
 		
 		assertNotNull(registedUser);
-		assertNotNull(registedUser.getId());
 		assertEquals(user, registedUser);
-		assertEquals(Long.valueOf(1L), registedUser.getId());
 		inOrder.verify(this.usersRepositoryMock).find("jamesgosling@javaee.com");
 		inOrder.verify(this.usersRepositoryMock).save(user);
-		
-		
-		
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
@@ -73,7 +67,6 @@ public class UsersManagerTest {
 		User user = User.of("jamesgosling@javaee.com", "james gosling", "james");
 		
 		final User alreadyInUse = User.of("jamesgosling@javaee.com", "james gosling Already In Use", "james");
-		alreadyInUse.setId(1L);
 		
 		when(this.usersRepositoryMock.find("jamesgosling@javaee.com")).thenReturn(alreadyInUse);
 		

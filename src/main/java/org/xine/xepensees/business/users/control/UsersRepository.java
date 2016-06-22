@@ -12,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -32,8 +33,11 @@ public class UsersRepository {
 		CriteriaBuilder builder = this.em.getCriteriaBuilder();
 		CriteriaQuery<User> query = builder.createQuery(User.class);
 		Root<User> users = query.from(User.class);
+		users.fetch("permissions", JoinType.LEFT);
+		
 		query.select(users).
-				where(builder.equal(
+				where(
+						builder.equal(
 								builder.lower(builder.trim(users.get("email")))
 								, String.valueOf(email).trim().toLowerCase()));
 		
@@ -55,11 +59,11 @@ public class UsersRepository {
 				queryParameter.parameters().entrySet().stream().
 				map(e -> {
 					
-					if ("name".equalsIgnoreCase(String.valueOf(e.getValue()))) {
+					if ("name".equalsIgnoreCase(String.valueOf(e.getKey()))) {
 						Predicate ofName = this.criteriaHelper.ilike(builder, users.get("name"), String.valueOf(e.getValue()), CriteriaHelper.MatchMode.START);
 						return Optional.of(ofName);
 					}
-					if ("email".equalsIgnoreCase(String.valueOf(e.getValue())) || "username".equalsIgnoreCase(String.valueOf(e.getValue()))) {
+					if ("email".equalsIgnoreCase(String.valueOf(e.getKey())) || "username".equalsIgnoreCase(String.valueOf(e.getKey()))) {
 						Predicate ofEmail = this.criteriaHelper.ilike(builder, users.get("email"), String.valueOf(e.getValue()), CriteriaHelper.MatchMode.EXACT);
 						return Optional.of(ofEmail);
 					}
