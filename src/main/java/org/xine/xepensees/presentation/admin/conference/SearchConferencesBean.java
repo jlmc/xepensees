@@ -37,6 +37,11 @@ public class SearchConferencesBean implements Serializable {
 		
 		this.currentItens = this.conferenceMng.search(this.filter);
 	}
+	
+	public void search() {
+		// TODO::
+		System.out.println("TODO:: search conference ");
+	}
 
 	public Collection<Conference> getConferences() {
 		return this.currentItens;

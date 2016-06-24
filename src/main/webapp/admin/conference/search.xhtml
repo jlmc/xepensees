@@ -17,164 +17,95 @@
 		</div>
 
 		<h:form id="search">
-
 			<h:messages errorClass="alert-error" />
 
-			<div class="col-md-12">
-				<div class="panel panel-default panel-table">
+			<div class="row aw-search-area">
+				<div class="col-lg-6">
+					<h:link outcome="/admin/conference/create" value="New Conference"
+						styleClass="btn btn-success">
+						<i class="glyphicon glyphicon-film" />
+					</h:link>
+				</div>
 
-					<div class="panel-heading">
-						<div class="row">
+				<div class="col-lg-6">
+					<div class="input-group">
+						<div class="input-group-btn"></div>
 
-							<div class="fixed-table-toolbar">
-								<div class="bs-bars pull-left">
-									<div id="toolbar"></div>
-								</div>
-								<div class="columns columns-right btn-group pull-right">
-								
-									<button class="btn btn-default" type="button" name="toggle"
-										title="Toggle">
-										<i class="glyphicon glyphicon-search icon-search" />
-									</button>
-									
-<!-- 									<button class="btn btn-default" type="button"  -->
-<!-- 											data-toggle="tooltip"  -->
-<!-- 											data-placement="top" -->
-<!-- 											title="hello some thing"> -->
-<!-- 										<i class="glyphicon glyphicon-tag icon-chevron-down" /> -->
-<!-- 									</button> -->
-									
-									<h:link outcome="/admin/conference/create" 
-											pt:type="button"
-											class="btn btn-default">
-										<i class="glyphicon glyphicon-tag icon-chevron-down" />
-											
-									</h:link>
-									
-									<button class="btn btn-default" type="button" name="refresh"
-										title="Refresh">
-										<i class="glyphicon glyphicon-refresh icon-refresh" />
-									</button>
-									<button class="btn btn-default" type="button" name="toggle"
-										title="Toggle">
-										<i class="glyphicon glyphicon-list-alt icon-list-alt" />
-									</button>
-									<div class="keep-open btn-group" title="Columns">
-										<button type="button" class="btn btn-default dropdown-toggle"
-											data-toggle="dropdown">
-											<i class="glyphicon glyphicon-th icon-th"></i> <span
-												class="caret"></span>
-										</button>
-										<ul class="dropdown-menu" role="menu">
-											<li><label style=""><input type="checkbox"
-													value="1" checked="checked" /> Item ID</label></li>
-											<li><label><input type="checkbox" value="2"
-													checked="checked" /> Item Name</label></li>
-										</ul>
-									</div>
-									<div class="export btn-group">
-										<button class="btn btn-default dropdown-toggle"
-											data-toggle="dropdown" type="button">
-											<i class="glyphicon glyphicon-export icon-share" /> <span
-												class="caret" />
-										</button>
-										<ul class="dropdown-menu" role="menu">
-											<li data-type="json"><a href="#">JSON</a></li>
-											<li data-type="xml"><a href="#">XML</a></li>
-										</ul>
-									</div>
-									
-
-								</div>
-
-								<div class="pull-right search">
-									<input class="form-control" type="text" placeholder="Search" />
-								</div>
-
-
-							</div>
-
+						<h:inputText value="#{searchUserBean.searchValue}"
+							id="searchUserBeanSearchValue" styleClass="form-control"
+							pt:aria-label="..." />
+						<div class="input-group-btn">
+							<h:commandLink action="#{searchConferencesBean.search}"
+								styleClass="btn btn-primary">
+								<span class="glyphicon glyphicon-search" aria-hidden="true" />
+								<f:ajax render="@form" execute="@this @form" />
+							</h:commandLink>
 						</div>
 					</div>
-
-					<div class="panel-body">
-						<h:dataTable id="searchConferencesBeanConferences"
-							styleClass="table table-striped table-bordered table-list"
-							value="#{searchConferencesBean.conferences}" var="_conference">
-
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Name " />
-								</f:facet>
-								<h:link outcome="/admin/conference/view">
-									<f:param name="id" value="#{_conference.id}" />
-									<h:outputText id="itemName" value="#{_conference.name}" />
-								</h:link>
-							</h:column>
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Date " />
-								</f:facet>
-								<h:link outcome="/admin/conference/view">
-									<f:param name="id" value="#{_conference.id}" />
-									<h:outputText id="itemDate" value="#{_conference.date}" />
-								</h:link>
-							</h:column>
-							<h:column>
-								<f:facet name="header">
-									<h:outputText value="Address " />
-								</f:facet>
-								<h:link outcome="/admin/conference/view">
-									<f:param name="id" value="#{_conference.id}" />
-									<h:outputText id="itemAddress"
-										value="#{_conference.country} - #{_conference.city} " />
-								</h:link>
-							</h:column>
-
-
-						</h:dataTable>
-
-						<!-- put the data table here -->
-					</div>
-
-					<div class="panel-footer">
-						<div class="row">
-							<div class="col col-xs-4">
-								<h:outputText value="Total #{searchConferencesBean.totalOfConferences}" />
-							</div>
-							
-							<div class="col col-xs-8">
-								<ul class="pagination pull-right">
-									<li>
-										<h:commandLink action="#{searchConferencesBean.backward}" 
-											styleClass="previous" 
-											disabled="#{searchConferencesBean.currentPageNumber eq 0}" >
-											<f:ajax execute="@form" render="@form" />
-											<i class="glyphicon glyphicon-backward"></i>
-											<span></span>
-										</h:commandLink>
-									</li>
-									<li><a href="#">#{searchConferencesBean.currentPageNumber + 1}</a></li>
-									<li>
-										<h:commandLink action="#{searchConferencesBean.forward}" 
-													   styleClass="next">
-											<f:ajax execute="@form" render="@form" />
-											<span></span>
-											<i class="glyphicon glyphicon-forward"></i>
-										</h:commandLink>
-										
-									</li>
-								</ul>
-							
-							</div>
-						</div>
-					</div>
-
 				</div>
 			</div>
 
+			<div class="col-md-12">
+				<h:dataTable styleClass="table"
+					id="searchConferencesBeanConferences"
+					value="#{searchConferencesBean.conferences}" var="_conference">
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Name " />
+						</f:facet>
+						<h:link outcome="/admin/conference/view">
+							<f:param name="id" value="#{_conference.id}" />
+							<h:outputText id="itemName" value="#{_conference.name}" />
+						</h:link>
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Date " />
+						</f:facet>
+						<h:link outcome="/admin/conference/view">
+							<f:param name="id" value="#{_conference.id}" />
+							<h:outputText id="itemDate" value="#{_conference.date}" />
+						</h:link>
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Address " />
+						</f:facet>
+						<h:link outcome="/admin/conference/view">
+							<f:param name="id" value="#{_conference.id}" />
+							<h:outputText id="itemAddress"
+								value="#{_conference.country} - #{_conference.city} " />
+						</h:link>
+					</h:column>
+
+
+				</h:dataTable>
+			</div>
+
+			<div class="row">
+				<h:panelGroup id="searchUserBeanPaginator" styleClass="col-md-12">
+					<ul class="pagination pull-right">
+						<li><h:commandLink action="#{searchConferencesBean.backward}"
+								styleClass="previous"
+								disabled="#{searchConferencesBean.currentPageNumber eq 0}">
+								<f:ajax execute="@form" render="@form" />
+								<i class="glyphicon glyphicon-backward"></i>
+								<span></span>
+							</h:commandLink></li>
+						<li><a href="#">#{searchConferencesBean.currentPageNumber + 1}</a></li>
+						<li><h:commandLink action="#{searchConferencesBean.forward}"
+								styleClass="next">
+								<f:ajax execute="@form" render="@form" />
+								<span></span>
+								<i class="glyphicon glyphicon-forward"></i>
+							</h:commandLink></li>
+					</ul>
+				</h:panelGroup>
+			</div>
 
 		</h:form>
+
 	</ui:define>
 
 </ui:composition>
