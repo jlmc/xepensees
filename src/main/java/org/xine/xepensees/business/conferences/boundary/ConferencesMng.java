@@ -9,7 +9,7 @@ import javax.inject.Inject;
 
 import org.xine.xepensees.business.conferences.control.ConferencesRepository;
 import org.xine.xepensees.business.conferences.entity.Conference;
-import org.xine.xepensees.business.conferences.entity.ConferenceFilter;
+import org.xine.xepensees.business.params.entity.QueryParameter;
 
 @Stateless
 public class ConferencesMng {
@@ -30,8 +30,8 @@ public class ConferencesMng {
 		return Collections.unmodifiableList(this.repository.all());
 	}
 	
-	public List<Conference> search(ConferenceFilter filter) {
-		return Collections.unmodifiableList(this.repository.search(filter));
+	public List<Conference> search(QueryParameter parameter) {
+		return Collections.unmodifiableList(this.repository.search(parameter));
 		
 		
 //		filter.getFirtsResult();

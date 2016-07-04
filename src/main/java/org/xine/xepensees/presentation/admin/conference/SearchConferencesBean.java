@@ -10,37 +10,31 @@ import javax.inject.Named;
 
 import org.xine.xepensees.business.conferences.boundary.ConferencesMng;
 import org.xine.xepensees.business.conferences.entity.Conference;
-import org.xine.xepensees.business.conferences.entity.ConferenceFilter;
+import org.xine.xepensees.business.params.entity.QueryParameter;
 
 @Named
 @javax.faces.view.ViewScoped
 public class SearchConferencesBean implements Serializable {
-	// https://github.com/RicardoToledoB/jsf-paginacion/blob/master/src/main/webapp/index.xhtml
 	private static final long serialVersionUID = 1L;
 
 	@Inject
 	private ConferencesMng conferenceMng;
-
-	
 	private Collection<Conference> currentItens = Collections.emptyList();
-	private ConferenceFilter filter = new ConferenceFilter();
-	
 	private Integer currentPage = 0;
 	private Integer pageSize = 10;
+	private String name;
 
 
 
 	@PostConstruct
 	public void initialize() {
-		this.filter.setFirtsResult(this.currentPage * this.pageSize);
-		this.filter.setMaxResults(this.pageSize);
-		
-		this.currentItens = this.conferenceMng.search(this.filter);
+		QueryParameter query = QueryParameter.empty().page(this.currentPage, this.pageSize);
+		this.currentItens = this.conferenceMng.search(query);
 	}
 	
 	public void search() {
-		// TODO::
-		System.out.println("TODO:: search conference ");
+		QueryParameter parameter = QueryParameter.with("startwith", this.name).page(0, this.pageSize);
+		this.currentItens = this.conferenceMng.search(parameter);
 	}
 
 	public Collection<Conference> getConferences() {
@@ -56,19 +50,23 @@ public class SearchConferencesBean implements Serializable {
 	}
 
 	public void backward() {
-		int firtsRecord = (this.currentPage - 1) * this.pageSize;
-		this.filter.setFirtsResult(firtsRecord);
-		this.currentItens = this.conferenceMng.search(this.filter);
+		if (this.currentPage == 0) {
+			return;
+		}
 		
 		this.currentPage--;
+		QueryParameter queryParameter = QueryParameter.with("startwith", this.name).page(this.currentPage, this.pageSize);
+		this.currentItens = this.conferenceMng.search(queryParameter);
 	}
 
 	public void forward() {
-		int firtsRecord = (this.currentPage + 1) * this.pageSize;
-		this.filter.setFirtsResult(firtsRecord);
-		this.currentItens = this.conferenceMng.search(this.filter);
-		
 		this.currentPage++;
+		QueryParameter queryParameter = QueryParameter.with("startwith", this.name).page(this.currentPage, this.pageSize);
+//		
+//		int firtsRecord = (this.currentPage + 1) * this.pageSize;
+//		this.filter.setFirtsResult(firtsRecord);
+		this.currentItens = this.conferenceMng.search(queryParameter);
+		
 	}
 
 }

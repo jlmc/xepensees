@@ -10,7 +10,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.xine.xepensees.business.conferences.entity.Conference;
-import org.xine.xepensees.business.conferences.entity.ConferenceFilter;
+import org.xine.xepensees.business.params.entity.QueryParameter;
 
 public class ConferencesRepository {
 
@@ -30,18 +30,17 @@ public class ConferencesRepository {
 		return this.entityManager.createQuery(query).getResultList();
 	}
 
-	public List<Conference> search(ConferenceFilter filter) {
+	public List<Conference> search(QueryParameter parameter) {
 		CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
 		CriteriaQuery<Conference> query = builder.createQuery(Conference.class);
 		Root<Conference> conferences = query.from(Conference.class);
 		query.select(conferences);
 		
 		TypedQuery<Conference> createQuery = this.entityManager.createQuery(query);
-		createQuery.setFirstResult(filter.getFirtsResult());
-		createQuery.setMaxResults(filter.getMaxResults());
+		createQuery.setFirstResult(parameter.getFirtsRecord());
+		createQuery.setMaxResults(parameter.getPageLength());
 		
 		return createQuery.getResultList();
-		
 	}
 
 	public Conference get(Long id) {
