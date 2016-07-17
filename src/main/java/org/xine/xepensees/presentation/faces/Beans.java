@@ -12,51 +12,51 @@ import javax.naming.NamingException;
 
 
 public class Beans {
-	
-	 public BeanManager getBeanManager() {
-		 /*
-		  @Inject BeanManager bm;
-		  BeanManager bm = CDI.current().getBeanManager(); 
-		  */
-		 
-	        try {
-	            final InitialContext context = new InitialContext();
-	            final BeanManager bm = (BeanManager) context.lookup("java:comp/BeanManager");
-	            return bm;
-	        } catch (NamingException | NullPointerException ex) {
-	            System.out.println(ex);
-	            throw new RuntimeException(ex);
-	        }
-	    }
 
-	    public <T> T getBean(final Class clazz) {
-	        final BeanManager beanManager = getBeanManager();
-	        final Set<Bean<?>> beans = beanManager.getBeans(clazz);
-	        final Bean<?> bean = beanManager.resolve(beans);
-	        final CreationalContext<?> context = beanManager.createCreationalContext(bean);
-	        final Object reference = beanManager.getReference(bean, clazz, context);
-	        return (T) reference;
+	public BeanManager getBeanManager() {
+		/*
+		 * @Inject BeanManager bm; BeanManager bm =
+		 * CDI.current().getBeanManager();
+		 */
 
-	    }
-	    
-	    public <T> T getBean(
-	    		Class<T> type,
-	    		Annotation... qualifiers){
-	    	
-	    	  BeanManager beanManager = getBeanManager();
-	    	  
-	    	  Set<Bean<?>> beans=beanManager.getBeans(type,qualifiers);
-	    	  if (beans == null || beans.isEmpty()) {
-//	    	    if (optional) {
-//	    	      return null;
-//	    	    }
-	    	    throw new IllegalStateException("Could not find beans for Type=" + type + " and qualifiers:"+ Arrays.toString(qualifiers));
-	    	  }
-	    	  
-	    	  final Bean<?> bean = beanManager.resolve(beans);
-		      final CreationalContext<?> context = beanManager.createCreationalContext(bean);
-		      final Object reference = beanManager.getReference(bean, type, context);
-		      return (T) reference;
-	    	}
-	    	 
+		try {
+			final InitialContext context = new InitialContext();
+			final BeanManager bm = (BeanManager) context.lookup("java:comp/BeanManager");
+			return bm;
+		} catch (NamingException | NullPointerException ex) {
+			System.out.println(ex);
+			throw new RuntimeException(ex);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> T getBean(final Class<?> clazz) {
+		final BeanManager beanManager = getBeanManager();
+		final Set<Bean<?>> beans = beanManager.getBeans(clazz);
+		final Bean<?> bean = beanManager.resolve(beans);
+		final CreationalContext<?> context = beanManager.createCreationalContext(bean);
+		final Object reference = beanManager.getReference(bean, clazz, context);
+		return (T) reference;
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> T getBean(Class<T> type, Annotation... qualifiers) {
+		final BeanManager beanManager = getBeanManager();
+
+		final Set<Bean<?>> beans = beanManager.getBeans(type, qualifiers);
+		if (beans == null || beans.isEmpty()) {
+			// if (optional) {
+			// return null;
+			// }
+			throw new IllegalStateException(
+					"Could not find beans for Type=" + type + " and qualifiers:" + Arrays.toString(qualifiers));
+		}
+
+		final Bean<?> bean = beanManager.resolve(beans);
+		final CreationalContext<?> context = beanManager.createCreationalContext(bean);
+		final Object reference = beanManager.getReference(bean, type, context);
+		return (T) reference;
+	}
+
 }

@@ -5,16 +5,12 @@
 	<artifactId>x-expensees</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-
-
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 	</properties>
-
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -27,7 +23,6 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
 	<dependencies>
 		<dependency>
 			<groupId>javax</groupId>
@@ -41,7 +36,6 @@
 			<version>2.2.10</version>
 			<scope>provided</scope>
 		</dependency>
-
 		<!-- -->
 		<dependency>
 			<groupId>org.glassfish.main.extras</groupId>
@@ -68,12 +62,7 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
-
 		<!-- -->
-
-
-
-
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
@@ -81,34 +70,34 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
 	<build>
+		<finalName>xexpensees</finalName>
 		<plugins>
-<!-- 			<plugin> -->
-<!-- 				<artifactId>maven-surefire-plugin</artifactId> -->
-<!-- 				<version>2.18.1</version> -->
-<!-- 				<configuration> -->
-<!-- 					<excludedGroups>org.xine.xepensees.business.expenses.boundary.IntegrationTest</excludedGroups> -->
-<!-- 				</configuration> -->
-<!-- 			</plugin> -->
-<!-- 			<plugin> -->
-<!-- 				<artifactId>maven-failsafe-plugin</artifactId> -->
-<!-- 				<version>2.18.1</version> -->
-<!-- 				<configuration> -->
-<!-- 					<includes> -->
-<!-- 						<include>**/*.java</include> -->
-<!-- 					</includes> -->
-<!-- 					<groups>org.xine.xepensees.business.expenses.boundary.IntegrationTest</groups> -->
-<!-- 				</configuration> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<goals> -->
-<!-- 							<goal>integration-test</goal> -->
-<!-- 							<goal>verify</goal> -->
-<!-- 						</goals> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 			</plugin> -->
+			<!-- <plugin> -->
+			<!-- <artifactId>maven-surefire-plugin</artifactId> -->
+			<!-- <version>2.18.1</version> -->
+			<!-- <configuration> -->
+			<!-- <excludedGroups>org.xine.xepensees.business.expenses.boundary.IntegrationTest</excludedGroups> -->
+			<!-- </configuration> -->
+			<!-- </plugin> -->
+			<!-- <plugin> -->
+			<!-- <artifactId>maven-failsafe-plugin</artifactId> -->
+			<!-- <version>2.18.1</version> -->
+			<!-- <configuration> -->
+			<!-- <includes> -->
+			<!-- <include>**/*.java</include> -->
+			<!-- </includes> -->
+			<!-- <groups>org.xine.xepensees.business.expenses.boundary.IntegrationTest</groups> -->
+			<!-- </configuration> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <goals> -->
+			<!-- <goal>integration-test</goal> -->
+			<!-- <goal>verify</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
 		</plugins>
 	</build>
 </project>
