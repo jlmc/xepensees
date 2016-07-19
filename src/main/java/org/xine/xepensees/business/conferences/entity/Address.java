@@ -3,6 +3,7 @@ package org.xine.xepensees.business.conferences.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -15,9 +16,13 @@ public class Address implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Column(name = "country", length = 100, nullable = false)
 	private String country;
+	@Column(name = "city", length = 100, nullable = false)
 	private String city;
+	@Column(name = "street", length = 200, nullable = true)
 	private String street;
+	@Column(name = "number", length = 50, nullable = true)
 	private String number;
 
 	protected Address() {
@@ -40,19 +45,19 @@ public class Address implements Serializable {
 	}
 
 	public String getCountry() {
-		return country;
+		return this.country;
 	}
 
 	public String getCity() {
-		return city;
+		return this.city;
 	}
 
 	public String getStreet() {
-		return street;
+		return this.street;
 	}
 
 	public String getNumber() {
-		return number;
+		return this.number;
 	}
 
 	public static Address of(final String country, final String city, final String street, final String number) {
@@ -73,9 +78,9 @@ public class Address implements Serializable {
 		}
 
 		final Address address = new Address();
-		address.country = toUppercaseFirstLetterAndLowercaseTheRest(country.trim());
-		address.city = toUppercaseFirstLetterAndLowercaseTheRest(city.trim());
-		address.street = toUppercaseFirstLetterAndLowercaseTheRest(street.trim());
+		address.country = toUppercaseFirstLetterAndLowercaseTheRest(country);
+		address.city = toUppercaseFirstLetterAndLowercaseTheRest(city);
+		address.street = toUppercaseFirstLetterAndLowercaseTheRest(street);
 		address.number = number.trim().toUpperCase();
 		return address;
 	}
@@ -83,7 +88,7 @@ public class Address implements Serializable {
 	private static String toUppercaseFirstLetterAndLowercaseTheRest(final String data) {
 		final String firstLetter = data.substring(0, 1).toUpperCase();
 		final String restLetters = data.substring(1).toLowerCase();
-		return firstLetter + restLetters;
+		return String.valueOf(firstLetter + restLetters).trim();
 	}
 
 	private static boolean isNullOrEmpty(final String country) {
@@ -92,7 +97,11 @@ public class Address implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.country, this.city, this.street, this.number);
+		return Objects.hash(
+				String.valueOf(this.country).toLowerCase(), 
+				String.valueOf(this.city).toLowerCase(),
+				String.valueOf(this.street).toLowerCase(), 
+				String.valueOf(this.number).toLowerCase());
 	}
 
 	@Override
@@ -107,32 +116,32 @@ public class Address implements Serializable {
 			return false;
 		}
 		final Address other = (Address) obj;
-		if (city == null) {
+		if (this.city == null) {
 			if (other.city != null) {
 				return false;
 			}
-		} else if (!city.equalsIgnoreCase(other.city)) {
+		} else if (!this.city.equalsIgnoreCase(other.city)) {
 			return false;
 		}
-		if (country == null) {
+		if (this.country == null) {
 			if (other.country != null) {
 				return false;
 			}
-		} else if (!country.equalsIgnoreCase(other.country)) {
+		} else if (!this.country.equalsIgnoreCase(other.country)) {
 			return false;
 		}
-		if (number == null) {
+		if (this.number == null) {
 			if (other.number != null) {
 				return false;
 			}
-		} else if (!number.equalsIgnoreCase(other.number)) {
+		} else if (!this.number.equalsIgnoreCase(other.number)) {
 			return false;
 		}
-		if (street == null) {
+		if (this.street == null) {
 			if (other.street != null) {
 				return false;
 			}
-		} else if (!street.equalsIgnoreCase(other.street)) {
+		} else if (!this.street.equalsIgnoreCase(other.street)) {
 			return false;
 		}
 		return true;
@@ -140,7 +149,7 @@ public class Address implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Address [country=" + country + ", city=" + city + ", street=" + street + ", number=" + number + "]";
+		return "Address [country=" + this.country + ", city=" + this.city + ", street=" + this.street + ", number=" + this.number + "]";
 	}
 
 }

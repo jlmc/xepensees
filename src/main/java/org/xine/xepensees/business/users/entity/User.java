@@ -10,6 +10,8 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
@@ -51,12 +53,13 @@ public class User implements Serializable {
     
     @ElementCollection
     @CollectionTable(name = "t_user_roles", joinColumns = { @JoinColumn(name = "userId") })
-    private Set<Permission> permissions = EnumSet.noneOf(Permission.class);
+	@Enumerated(EnumType.STRING)
+    private final Set<Permission> permissions = EnumSet.noneOf(Permission.class);
     
     protected User() {}
     
     public static User of(String email, String name, String password) {
-    	User user = new User();
+    	final User user = new User();
     	user.setEmail(email);
     	user.setName(name);
     	user.setPassword(password);
@@ -139,6 +142,14 @@ public class User implements Serializable {
 
 	public static User empty() {
 		return new User();
+	}
+
+	public boolean isAdmin() {
+		return this.permissions.contains(Permission.ADMIN);
+	}
+
+	public boolean isUser() {
+		return this.permissions.contains(Permission.USER);
 	}
 
 }
