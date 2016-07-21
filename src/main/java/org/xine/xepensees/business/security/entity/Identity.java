@@ -58,4 +58,9 @@ public class Identity implements Serializable {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Identity [user=" + this.user + "]";
+	}
+
 }

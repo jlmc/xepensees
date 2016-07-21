@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+<h:head>
+	<title>x-expensees Signin</title>
+	<meta charset="utf-8" />
+	<link rel="shortcut icon" href="#{resource['img:favicon.ico']}" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<h:outputStylesheet library="css" name="bootstrap-social.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<h:outputStylesheet library="css" name="system.css" />
+	<h:outputStylesheet library="css" name="signin.css" />
+
+	<h:outputScript library="js" name="jquery-2.1.4.min.js" />
+	<h:outputScript library="js" name="bootstrap.js" />
+
+</h:head>
+
+<h:body>
+	<main>
+		<div class="container">
+			
+			<div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3">
+			
+				<div class="row">
+					<div class="col-md-12 col-sm-12 ">
+						<h:graphicImage library="img" name="otherlogo.png" class="img-responsive img-circle center-block" alt="Responsive image" width="100" height="100"/>
+					</div>
+				</div>
+				
+				<div class="panel panel-info">
+				
+					<div class="panel-heading">
+	                	<div class="panel-title">x-expensEEs</div>
+	                	<div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a></div>
+	            	</div>  
+	            	
+	            	<div class="panel-body">
+	            		
+	            		<h:form styleClass="form-horizontal aw-form" method="POST">
+	            			
+	            			<h:messages />
+	            			
+	            			<div class="input-group">
+									<span class="input-group-addon">
+										<i class="glyphicon glyphicon-user"/>
+									</span>
+									<input class="form-control" id="j_username" name="j_username" placeholder="email" type="text" value=""/>
+							</div>
+							
+							<div class="input-group">
+                        		<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        		<input id="j_password" type="password" class="form-control" name="j_password" placeholder="Password"/>
+                   		 	</div> 
+                   		 	
+                   		 	<div class="input-group">
+		            			<div class="checkbox">
+					    	    	<label>
+					    	    		<input type="checkbox" name="remember" value="1"/>  Remember me
+					    	    	</label>
+					    	    </div>
+            				</div>
+            				
+            				<div class="form-group" style="margin-top: 10px;">
+	                        <!-- Button -->
+		                        <div class="col-sm-12 controls">
+		                        	
+		                        	<h:commandLink action="#{securityBean.login()}" styleClass="btn btn-primary">
+		                        		<i class="glyphicon glyphicon-log-in"></i> Login	
+		                        	</h:commandLink>
+		                        	
+		                        </div>
+                   		 	</div>
+                   		 
+	            		
+	            		</h:form>
+	            		
+	            	</div>
+				
+				</div>
+			
+			</div>
+
+		</div>
+	</main>
+
+
+
+<!-- 
+	<form method="POST" action="j_security_check">
+		Username: <input type="text" name="j_username"/> 
+		Password: <input type="password" name="j_password"/>
+		<input type="submit" value="login" name="j_security_check">
+	</form>
+
+-->
+
+<!-- 
+	<h:form id="loginForm" enctype="application/x-www-form-urlencoded">
+
+		<h:messages />
+
+		<h:outputLabel value="Username"></h:outputLabel>
+		<input name="j_username" type="text" />
+		<h:outputLabel value="Passwort"></h:outputLabel>
+		<input name="j_password" size="15" type="password" />
+		<h:commandButton value="Anmelden" action="#{securityBean.login()}" />
+	</h:form>
+ -->
+
+</h:body>
+</html>

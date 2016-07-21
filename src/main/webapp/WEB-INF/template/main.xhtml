@@ -16,21 +16,27 @@
 					<div class="well">
 						<ul class="nav">
 							<li class="nav-header">Reports</li>
-							<li class="active">
-								<h:link outcome="/expense/add" value="New expenses"/>
-							</li>
-							<li>
-								<a href="#">View expenses</a>
-							</li>
-							<li>
- 								<h:link outcome="/admin/conference/search" value="Conferences"/>
-							</li>
-							<li>
-								<a href="#">Reembursement</a>
-							</li>
-							<li>
-								<h:link outcome="/admin/user/search" value="User"/>
-							</li>
+							
+							<h:panelGroup rendered="#{identityBean.user}">
+								<li class="active" hidden="false">
+									<h:link outcome="/expense/add" value="New expenses"/>
+								</li>
+								<li>
+									<a href="#">View expenses</a>
+								</li>
+							</h:panelGroup>
+							
+							<h:panelGroup rendered="#{identityBean.admin}">
+								<li>
+	 								<h:link outcome="/admin/conference/search" value="Conferences"/>
+								</li>
+								<li>
+									<a href="#">Reembursement</a>
+								</li>
+								<li>
+									<h:link outcome="/admin/user/search" value="User"/>
+								</li>
+							</h:panelGroup>
 						</ul>
 					</div>
 				</div>

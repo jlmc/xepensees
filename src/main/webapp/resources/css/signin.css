@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+
+#loginbox {
+	margin-top: 30px;
+}
+
+#loginbox>div:first-child {
+	padding-bottom: 10px;
+}
+
+.iconmelon {
+    display: block;
+    margin: auto;
+}
+
+.aw-form > div {
+   margin-bottom: 25px;
+}
+
+.aw-form > div:last-child {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

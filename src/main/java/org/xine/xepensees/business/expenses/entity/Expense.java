@@ -57,7 +57,7 @@ public class Expense implements Serializable {
 	private LocalDate date;
 
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(final Long id) {
@@ -65,7 +65,7 @@ public class Expense implements Serializable {
 	}
 
 	protected int getVersion() {
-		return version;
+		return this.version;
 	}
 
 	protected void setVersion(final int version) {
@@ -73,7 +73,7 @@ public class Expense implements Serializable {
 	}
 
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
 	public void setDescription(final String description) {
@@ -81,7 +81,7 @@ public class Expense implements Serializable {
 	}
 
 	public LocalDate getDate() {
-		return date;
+		return this.date;
 	}
 
 	public void setDate(final LocalDate date) {
@@ -89,7 +89,7 @@ public class Expense implements Serializable {
 	}
 
 	public BigDecimal getAmount() {
-		return amount;
+		return this.amount;
 	}
 
 	public void setAmount(final BigDecimal amount) {
@@ -97,7 +97,7 @@ public class Expense implements Serializable {
 	}
 
 	public Currency getCurrency() {
-		return currency;
+		return this.currency;
 	}
 
 	public void setCurrency(final Currency currency) {
@@ -105,7 +105,7 @@ public class Expense implements Serializable {
 	}
 
 	public ExpenseType getExpenseType() {
-		return expenseType;
+		return this.expenseType;
 	}
 
 	public void setExpenseType(final ExpenseType expenseType) {
@@ -114,8 +114,8 @@ public class Expense implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Extense [id=" + id + ", version=" + version + ", amount=" + amount + ", description=" + description
-				+ ", date=" + date + "]";
+		return "Extense [id=" + this.id + ", version=" + this.version + ", amount=" + this.amount + ", description=" + this.description
+				+ ", date=" + this.date + "]";
 	}
 
 	@Override
