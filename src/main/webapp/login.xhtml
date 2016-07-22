@@ -24,6 +24,17 @@
 	<h:outputScript library="js" name="jquery-2.1.4.min.js" />
 	<h:outputScript library="js" name="bootstrap.js" />
 
+	<script>
+		$(document).ready(function() {
+			$('.aw-form').on('keypress', function(event){
+				if (event.which == 13) {
+					event.preventDefault();
+					$('.aw-submit').trigger('click');
+				}
+			});
+		});
+	</script>
+
 </h:head>
 
 <h:body>
@@ -47,7 +58,7 @@
 	            	
 	            	<div class="panel-body">
 	            		
-	            		<h:form styleClass="form-horizontal aw-form" method="POST">
+	            		<h:form styleClass="form-horizontal aw-form" method="POST" >
 	            			
 	            			<h:messages />
 	            			
@@ -55,12 +66,15 @@
 									<span class="input-group-addon">
 										<i class="glyphicon glyphicon-user"/>
 									</span>
-									<input class="form-control" id="j_username" name="j_username" placeholder="email" type="text" value=""/>
+									<input class="form-control" id="j_username" required="required" name="j_username" placeholder="email" type="text" value=""/>
 							</div>
 							
 							<div class="input-group">
                         		<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                        		<input id="j_password" type="password" class="form-control" name="j_password" placeholder="Password"/>
+                        		<input id="j_password" type="password" class="form-control" 
+                        				name="j_password" required="required" placeholder="Password" 
+                        				
+                        				/>
                    		 	</div> 
                    		 	
                    		 	<div class="input-group">
@@ -75,7 +89,7 @@
 	                        <!-- Button -->
 		                        <div class="col-sm-12 controls">
 		                        	
-		                        	<h:commandLink action="#{identityBean.login()}" styleClass="btn btn-primary">
+		                        	<h:commandLink action="#{identityBean.login()}" styleClass="btn btn-primary aw-submit">
 		                        		<i class="glyphicon glyphicon-log-in"></i> Login	
 		                        	</h:commandLink>
 		                        	
@@ -95,7 +109,7 @@
 	</main>
 
 
-
+	
 <!-- 
 	<form method="POST" action="j_security_check">
 		Username: <input type="text" name="j_username"/> 

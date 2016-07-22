@@ -15,8 +15,6 @@
 		<div class="page-header">
 			<h1>Profile</h1>
 		</div>
-
-
 		
 		<h:form id="create">
 
@@ -66,37 +64,37 @@
 
 				</h:panelGroup>
 
-				<h:panelGroup
-					styleClass="form-group aw-required #{_profileBeanPassword.valid ? '' : 'has-error'}"
-					layout="block">
-					<h:outputLabel styleClass="control-label" value="Password:"
-						for="_profileBeanPassword" />
-
+				<h:panelGroup id="pwdPanelGroup" styleClass="form-group aw-required #{_createUserBeanPassword.valid ? '' : 'has-error'}" layout="block">
+					<h:outputLabel styleClass="control-label" value="Password:" for="createUserBeanPassword" />
 					<div class="input-group">
 						<span class="input-group-addon"><i
 							class="glyphicon glyphicon-lock"></i></span>
-						<h:inputSecret id="profileBeanPassword" styleClass="form-control"
-							label="Password" binding="#{_profileBeanPassword}"
-							value="#{profileBean.user.password}" pt:required="required"
-							pt:placeholder="Enter the Password" />
+						<h:inputSecret id="createUserBeanPassword"
+							styleClass="form-control" label="Password"
+							binding="#{_createUserBeanPassword}"
+							 >
+						
+						
+							<f:validator validatorId="passwordValidator" />
+							<f:attribute name="confirmation" value="#{confirmation}"/>
+							<!-- 	<f:ajax event="blur"  
+									execute="pwdPanelGroup pwdConfirmationPanelGroup"
+	 								render="pwdConfirmationPanelGroup pwdPanelGroup createUserMsgs" /> -->
+						</h:inputSecret>
 					</div>
 				</h:panelGroup>
-
-				<h:panelGroup
-					styleClass="form-group aw-required #{_profileBeanPasswordConfirmation.valid ? '' : 'has-error'}"
-					layout="block">
-					<h:outputLabel styleClass="control-label"
-						value="Password Confirmation:"
-						for="_profileBeanPasswordConfirmation" />
-
+				
+				<h:panelGroup id="pwdConfirmationPanelGroup" styleClass="form-group aw-required #{confirmation.valid ? '' : 'has-error'}" layout="block">
+					<h:outputLabel styleClass="control-label" value="Confirm Password:"
+						for="confirmationID" />
 					<div class="input-group">
 						<span class="input-group-addon"><i
 							class="glyphicon glyphicon-lock"></i></span>
-						<h:inputSecret id="profileBeanPasswordConfirmation"
-							styleClass="form-control" label="Password Confirmation"
-							binding="#{_profileBeanPasswordConfirmation}"
-							pt:required="required"
-							pt:placeholder="Enter the password Confirmation" />
+						
+						<h:inputSecret id="confirmationID"
+							styleClass="form-control" label="Password"
+							binding="#{confirmation}">
+						</h:inputSecret>
 					</div>
 				</h:panelGroup>
 
