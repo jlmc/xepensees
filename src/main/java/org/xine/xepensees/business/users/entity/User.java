@@ -1,6 +1,7 @@
 package org.xine.xepensees.business.users.entity;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Objects;
@@ -66,8 +67,10 @@ public class User implements Serializable {
     	return user;
     }
     
-	public void addPermission(final Permission permission) {
-    	this.permissions.add(permission);
+	public void addPermission(final Permission... permission) {
+		if (permission != null) {
+			this.permissions.addAll(Arrays.asList(permission));
+		}
 	}
 
     public Set<Permission> getPermissions() {

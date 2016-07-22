@@ -89,8 +89,20 @@
 						</h:inputSecret>
 					</div>
 				</h:panelGroup>
-
-
+				
+				<h:panelGroup id="permissionsGroup" layout="block"
+						styleClass="form-group aw-required">
+					
+					<h:outputLabel styleClass="control-label" value="Permissions:" for="createUserBeanPermissions" />
+					<h:selectManyCheckbox value="#{createUserBean.permissions}" converter="permissionConverter"
+						layout="pageDirection" id="createUserBeanPermissions">
+						<f:selectItems value="#{createUserBean.allPermissions}" ></f:selectItems>
+					</h:selectManyCheckbox>
+				
+				
+				</h:panelGroup>
+				
+				
 
 			</fieldset>
 			<h:commandLink action="#{createUserBean.create}" value="Register" styleClass="btn btn-primary"/>

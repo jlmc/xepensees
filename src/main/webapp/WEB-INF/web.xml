@@ -95,6 +95,25 @@
 			<role-name>ADMIN</role-name>
 		</auth-constraint>
 	</security-constraint>
+	<security-constraint>
+		<display-name>Users Pages</display-name>
+		<web-resource-collection>
+			<web-resource-name>Protected User Area</web-resource-name>
+			<description></description>
+			<url-pattern>/expense/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>HEAD</http-method>
+			<http-method>PUT</http-method>
+			<http-method>OPTIONS</http-method>
+			<http-method>TRACE</http-method>
+			<http-method>DELETE</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<description/>
+			<role-name>USER</role-name>
+		</auth-constraint>
+	</security-constraint>
 
 
 </web-app>

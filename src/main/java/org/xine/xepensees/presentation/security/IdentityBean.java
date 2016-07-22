@@ -56,12 +56,6 @@ public class IdentityBean implements Serializable {
 		return this.identity;
 	}
 
-	@Inject
-	public void setIdentity(Identity identity) {
-		System.out.println("defining identity: " + identity);
-		this.identity = identity;
-	}
-
 	/**
 	 * implementation of j_security_check
 	 */

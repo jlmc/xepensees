@@ -3,8 +3,10 @@ package org.xine.xepensees.presentation.faces.converters;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
+@FacesConverter(value = "genericEnumConverter")
 public class EnumConverter implements Converter {
 
 	@Override
