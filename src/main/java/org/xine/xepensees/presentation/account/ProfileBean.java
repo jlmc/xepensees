@@ -30,6 +30,8 @@ public class ProfileBean implements Serializable {
 		return this.user;
 	}
 	
+	public void update() {
 
+	}
 
 }
