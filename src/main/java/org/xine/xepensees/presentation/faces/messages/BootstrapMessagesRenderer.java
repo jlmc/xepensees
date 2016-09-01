@@ -45,10 +45,8 @@ public class BootstrapMessagesRenderer extends MessagesRenderer {
 		assert writer != null;
 
 		String clientId = ((UIMessages) component).getFor();
-		if (clientId == null) {
-			if (messages.isGlobalOnly()) {
-				clientId = "";
-			}
+		if (clientId == null && messages.isGlobalOnly()) {
+			clientId = "";
 		}
 
 		@SuppressWarnings("unchecked")

@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.xine.xepensees.business.security.entity.Identity;
 import org.xine.xepensees.presentation.faces.RedirectView;
@@ -19,6 +20,7 @@ import org.xine.xepensees.presentation.faces.messages.Messages;
 public class IdentityBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	// @Inject
 	private Identity identity;
 
 	@Inject
@@ -26,6 +28,12 @@ public class IdentityBean implements Serializable {
 
 	@Inject
 	FacesContext facesContext;
+
+	@Inject
+	HttpSession session;
+
+	@Inject
+	HttpServletRequest request;
 
 	@Inject
 	Messages messages;
@@ -61,10 +69,9 @@ public class IdentityBean implements Serializable {
 	 */
 	public RedirectView login() {
 		try {
-			final HttpServletRequest request = (HttpServletRequest) this.facesContext.getExternalContext().getRequest();
-			final String username = request.getParameter("j_username");
-			final String password = request.getParameter("j_password");
-			request.login(username, password);
+			final String username = this.request.getParameter("j_username");
+			final String password = this.request.getParameter("j_password");
+			this.request.login(username, password);
 			
 			cleanIdentity();
 			
@@ -83,12 +90,12 @@ public class IdentityBean implements Serializable {
 	 * implementation of j_security_logout
 	 */
 	public RedirectView logout() {
-		final HttpServletRequest request = (HttpServletRequest) this.facesContext.getExternalContext().getRequest();
 		try {
-			request.logout();
+			this.request.logout();
 
 			cleanIdentity();
 
+			//this.session.invalidate();
 		} catch (final ServletException e) {
 			this.messages.addSucessMessageFlash("some problem with the logout!");
 		}

@@ -21,19 +21,19 @@ public class SearchConferencesBean implements Serializable {
 	private ConferencesMng conferenceMng;
 	private Collection<Conference> currentItens = Collections.emptyList();
 	private Integer currentPage = 0;
-	private Integer pageSize = 10;
+	private final Integer pageSize = 10;
 	private String name;
 
 
 
 	@PostConstruct
 	public void initialize() {
-		QueryParameter query = QueryParameter.empty().page(this.currentPage, this.pageSize);
+		final QueryParameter query = QueryParameter.empty().page(this.currentPage, this.pageSize);
 		this.currentItens = this.conferenceMng.search(query);
 	}
 	
 	public void search() {
-		QueryParameter parameter = QueryParameter.with("startwith", this.name).page(0, this.pageSize);
+		final QueryParameter parameter = QueryParameter.with("startwith", this.name).page(0, this.pageSize);
 		this.currentItens = this.conferenceMng.search(parameter);
 	}
 
@@ -55,18 +55,26 @@ public class SearchConferencesBean implements Serializable {
 		}
 		
 		this.currentPage--;
-		QueryParameter queryParameter = QueryParameter.with("startwith", this.name).page(this.currentPage, this.pageSize);
+		final QueryParameter queryParameter = QueryParameter.with("startwith", this.name).page(this.currentPage, this.pageSize);
 		this.currentItens = this.conferenceMng.search(queryParameter);
 	}
 
 	public void forward() {
 		this.currentPage++;
-		QueryParameter queryParameter = QueryParameter.with("startwith", this.name).page(this.currentPage, this.pageSize);
+		final QueryParameter queryParameter = QueryParameter.with("startwith", this.name).page(this.currentPage, this.pageSize);
 //		
 //		int firtsRecord = (this.currentPage + 1) * this.pageSize;
 //		this.filter.setFirtsResult(firtsRecord);
 		this.currentItens = this.conferenceMng.search(queryParameter);
 		
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

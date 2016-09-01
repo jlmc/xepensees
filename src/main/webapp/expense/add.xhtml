@@ -36,11 +36,11 @@
                     </h:selectOneMenu>
 		 	    </h:panelGroup>
 		 	    
-		 	    <h:panelGroup styleClass="form-group aw-required #{_expenseBeanExpenseDate.valid ? '' : 'has-error'}" layout="block">
+		 	    <h:panelGroup styleClass="form-group aw-required #{_date.valid ? '' : 'has-error'}" layout="block">
 		 	    	<h:outputLabel styleClass="control-label" 
-		 	    				   for="expenseBeanExpenseDate" value="Conference:"/>
-		 	    	<h:inputText id="expenseBeanExpenseDate"
-		 	    				binding="#{_expenseBeanExpenseDate}" 
+		 	    				   for="date" value="Date:"/>
+		 	    	<h:inputText id="date"
+		 	    				binding="#{_date}" 
 		 	    				 pt:type="date"
 		 	    				 value="#{addExpenseBean.extense.date}"
 		 	    				 styleClass="form-control">

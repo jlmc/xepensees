@@ -19,21 +19,21 @@
 		<h:form id="search">
 			<h:messages errorClass="alert-error" />
 
-			<div class="row aw-search-area">
-				<div class="col-lg-6">
-					<h:link outcome="/admin/conference/create" value="New Conference"
-						styleClass="btn btn-success">
-						<i class="glyphicon glyphicon-film" />
-					</h:link>
-				</div>
 
-				<div class="col-lg-6">
+			<div class="row">
+				<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon1">Name</span>
-						
-						<h:inputText value="#{searchUserBean.searchValue}"
-							id="searchUserBeanSearchValue" styleClass="form-control"
-							pt:aria-label="..." />
+						<div class="input-group-btn">
+							<h:link outcome="/admin/conference/create" value="New Conference"
+								styleClass="btn btn-success" pt:type="button">
+								<!-- 						<i class="glyphicon glyphicon-film" /> -->
+							</h:link>
+						</div>
+
+						<h:inputText value="#{searchConferencesBean.name}"
+							id="searchUserBeanSearchValue" styleClass="form-control" 
+							pt:aria-label="..." pt:placeholder="filter by conference name" />
+
 						<div class="input-group-btn">
 							<h:commandLink action="#{searchConferencesBean.search}"
 								styleClass="btn btn-primary">
@@ -43,7 +43,10 @@
 						</div>
 					</div>
 				</div>
+				<!-- end col-md-12 -->
 			</div>
+			<!-- end row -->
+
 
 			<div class="col-md-12">
 				<h:dataTable styleClass="table"
