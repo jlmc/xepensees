@@ -77,7 +77,7 @@ public class IdentityBean implements Serializable {
 			
 			return RedirectView.of("/index");
 		} catch (final ServletException e) {
-			this.messages.addErrorMessageFlash("Incorrect Username or Password!");
+			this.messages.addErrorMessageFlash("invalid username or password!");
 			return RedirectView.of("/login");
 		}
 	}

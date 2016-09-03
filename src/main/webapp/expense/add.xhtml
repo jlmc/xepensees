@@ -90,21 +90,17 @@
                  <h:panelGroup styleClass="form-group #{_expenseBeanExpenseDescription.valid ? '' : 'has-error'}" layout="block" >
                 	<h:outputLabel styleClass="control-label" value="Description:" for="expenseBeanExpenseDescription"/>
                  	<h:inputTextarea styleClass="form-control" 
-                 					 id="expenseBeanExpenseDescription" 
+                 					 id="expenseBeanExpenseDescription" label="Description"
                  					 value="#{addExpenseBean.extense.description}"
                  					 binding="#{_expenseBeanExpenseDescription}"/>
                  </h:panelGroup>
 
 			</fieldset>
 			
-			<button type="submit" jsf:action="#{addExpenseBean.save}" 
-					class="btn btn-primary">
+			<button type="submit" jsf:action="#{addExpenseBean.save}" class="btn btn-primary">
 				 Add Expenses
 				<span class="glyphicon glyphicon-chevron-right"/>		
 			</button>
-			
-			
-
 
 		</h:form>
 		

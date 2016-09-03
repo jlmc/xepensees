@@ -16,21 +16,3 @@ INSERT INTO T_USER_ROLES (userId, permissions) VALUES('admin@gmail.com', 'ADMIN'
 
 INSERT INTO T_USER (email, name, password, version) VALUES('simplespeaker@gmail.com', 'Simple Speaker', 'jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=', 1)
 INSERT INTO T_USER_ROLES (userId, permissions) VALUES('simplespeaker@gmail.com', 'USER');
-
-
-     select
-         user0_.email as email1_2_,
-         user0_.name as name2_2_,
-         user0_.password as password3_2_,
-         user0_.version as version4_2_,
-         permission1_.userId as userId1_3_0__,
-         permission1_.permissions as permissi2_3_0__ 
-     from
-         t_user user0_ 
-     left outer join
-         t_user_roles permission1_ 
-             on user0_.email=permission1_.userId 
-     where
-         lower(trim(BOTH 
-     from
-         user0_.email))=?

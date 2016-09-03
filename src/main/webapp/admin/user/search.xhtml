@@ -21,30 +21,21 @@
 		<h:form id="search">
 			<h:messages errorClass="alert-error" id="searchUserBeanErros" />
 
-			<div class="row aw-search-area">
-				<div class="col-lg-6">
-					<h:link outcome="/admin/user/create" value="New User"
-						styleClass="btn btn-success">
-						<i class="glyphicon glyphicon glyphicon-user" />
-					</h:link>
-				</div>
-
-				<div class="col-lg-6">
+			
+			<div class="row">
+				<div class="col-md-12">
 					<div class="input-group">
 						<div class="input-group-btn">
-							<h:selectOneMenu value="#{searchUserBean.searchFor}"
-								id="searchUserBeanSearchFor"
-								styleClass="btn btn-default dropdown-toggle aw-search-element">
-								<f:selectItem itemLabel="search for" itemValue=""
-									noSelectionOption="true" />
-								<f:selectItem itemLabel="Name" itemValue="name" />
-								<f:selectItem itemLabel="E-mail" itemValue="email" />
-							</h:selectOneMenu>
+							<h:link outcome="/admin/user/create" value="New User"
+								styleClass="btn btn-success" pt:type="button">
+									<i class="glyphicon glyphicon glyphicon-user" />
+							</h:link>
 						</div>
 
-						<h:inputText value="#{searchUserBean.searchValue}"
+						<h:inputText value="#{searchConferencesBean.name}"
 							id="searchUserBeanSearchValue" styleClass="form-control"
-							pt:aria-label="..." />
+							pt:aria-label="..." pt:placeholder="filter by user name" />
+
 						<div class="input-group-btn">
 							<h:commandLink action="#{searchUserBean.search}"
 								styleClass="btn btn-primary">
@@ -55,7 +46,12 @@
 						</div>
 					</div>
 				</div>
+				<!-- end col-md-12 -->
 			</div>
+		<!-- end row -->
+			
+			
+			
 
 			<!-- end of search area -->
 

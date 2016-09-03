@@ -33,7 +33,7 @@ public class SearchConferencesBean implements Serializable {
 	}
 	
 	public void search() {
-		final QueryParameter parameter = QueryParameter.with("startwith", this.name).page(0, this.pageSize);
+		final QueryParameter parameter = QueryParameter.with("name", this.name).page(0, this.pageSize);
 		this.currentItens = this.conferenceMng.search(parameter);
 	}
 
