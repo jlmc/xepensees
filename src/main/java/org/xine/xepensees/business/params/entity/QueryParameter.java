@@ -5,6 +5,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class QueryParameter implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -49,6 +55,24 @@ public class QueryParameter implements Serializable {
 		return this;
 	}
 	
+	public Object get(String key) {
+		return this.parameters.get(key);
+	}
+
+	public boolean contains(String key) {
+		return this.parameters.containsKey(key);
+	}
+
+	public boolean containsNotNullValue(String key) {
+		if (contains(key)) {
+			if (get(key) != null) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public Map<String, Object> parameters() {
 		return Collections.unmodifiableMap(this.parameters);
 	}

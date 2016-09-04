@@ -15,6 +15,7 @@ import org.xine.xepensees.business.expenses.boundary.ExpensesMng;
 import org.xine.xepensees.business.expenses.entity.Currency;
 import org.xine.xepensees.business.expenses.entity.Expense;
 import org.xine.xepensees.business.expenses.entity.ExpenseType;
+import org.xine.xepensees.business.security.entity.Identity;
 import org.xine.xepensees.presentation.faces.messages.Messages;
 
 @Named
@@ -22,6 +23,9 @@ import org.xine.xepensees.presentation.faces.messages.Messages;
 public class AddExpenseBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	@Inject
+	Identity currentIdentity;
 
 	@Inject
 	ExpensesMng expensesMng;
@@ -55,7 +59,10 @@ public class AddExpenseBean implements Serializable {
 		System.out.println(this.extense);
 
 		try {
+			this.extense.setUser(this.currentIdentity.getUser());
+			this.extense.setConference(this.conference);
 			this.expensesMng.create(this.extense);
+
 			this.messages.addSucessMessageFlash("Expense created with sucess.");
 			this.extense = new Expense();
 		} catch (final Exception e) {

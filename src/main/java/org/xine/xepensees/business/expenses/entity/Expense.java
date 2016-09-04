@@ -8,9 +8,13 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.DecimalMax;
@@ -20,7 +24,9 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.xine.xepensees.business.conferences.entity.Conference;
 import org.xine.xepensees.business.persistence.control.LocalDateConverter;
+import org.xine.xepensees.business.users.entity.User;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -55,6 +61,30 @@ public class Expense implements Serializable {
 	@NotNull
 	@Convert(converter = LocalDateConverter.class)
 	private LocalDate date;
+
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "conference_id", nullable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_conference"))
+	private Conference conference;
+
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", nullable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_user"))
+	private User user;
+
+	public void setConference(Conference conference) {
+		this.conference = conference;
+	}
+
+	public Conference getConference() {
+		return this.conference;
+	}
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public Long getId() {
 		return this.id;

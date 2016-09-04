@@ -21,6 +21,7 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.xine.xepensees.business.validators.control.NotBlank;
 
@@ -41,7 +42,7 @@ public class User implements Serializable {
     @Column(name = "email", length = 100, nullable = false, unique=true)
 	private String email;
 
-    
+	@XmlTransient
     @NotNull
     @Column(name = "password", length = 512, nullable = false)
 	private String password;
@@ -51,7 +52,7 @@ public class User implements Serializable {
 	private String name;
     
     
-    
+	@XmlTransient
     @ElementCollection
     @CollectionTable(name = "t_user_roles", joinColumns = { @JoinColumn(name = "userId") })
 	@Enumerated(EnumType.STRING)

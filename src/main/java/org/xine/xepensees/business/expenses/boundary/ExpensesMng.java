@@ -1,7 +1,6 @@
 package org.xine.xepensees.business.expenses.boundary;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
@@ -10,6 +9,7 @@ import javax.validation.constraints.NotNull;
 
 import org.xine.xepensees.business.expenses.control.ExpensesRepository;
 import org.xine.xepensees.business.expenses.entity.Expense;
+import org.xine.xepensees.business.params.entity.QueryParameter;
 
 @Stateless
 public class ExpensesMng {
@@ -24,9 +24,8 @@ public class ExpensesMng {
 		return this.expensesRepository.save(expense);
 	}
 
-	public Collection<Expense> all() {
-		return Collections.emptyList();
-		//return Collections.unmodifiableCollection(expenses.values());
+	public List<Expense> search(QueryParameter parameter) {
+		return this.expensesRepository.search(parameter);
 	}
 
 }
