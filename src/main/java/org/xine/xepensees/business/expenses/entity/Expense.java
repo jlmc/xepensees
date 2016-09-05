@@ -62,10 +62,12 @@ public class Expense implements Serializable {
 	@Convert(converter = LocalDateConverter.class)
 	private LocalDate date;
 
+	@NotNull
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "conference_id", nullable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_conference"))
 	private Conference conference;
 
+	@NotNull
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_user"))
 	private User user;

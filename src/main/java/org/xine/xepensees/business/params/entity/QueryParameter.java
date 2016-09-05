@@ -64,13 +64,7 @@ public class QueryParameter implements Serializable {
 	}
 
 	public boolean containsNotNullValue(String key) {
-		if (contains(key)) {
-			if (get(key) != null) {
-				return true;
-			}
-		}
-
-		return false;
+		return contains(key) && get(key) != null;
 	}
 
 	public Map<String, Object> parameters() {
@@ -83,5 +77,9 @@ public class QueryParameter implements Serializable {
 	
 	public int getPageLength() {
 		return this.pageLength;
+	}
+
+	public Integer getPage() {
+		return this.page;
 	}
 }

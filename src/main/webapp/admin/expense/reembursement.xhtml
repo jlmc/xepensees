@@ -19,6 +19,57 @@
 		
 		
 		
+		
+		<h:form id="expensesAdmin">
+			
+			
+			<div class="row">
+			
+				<div class="col-md-12">
+				
+					<h:dataTable styleClass="table"
+						id="expenseesTable"
+						value="#{reembursementBean.paginatedListWrapper.list}" var="_expense">
+	
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Confeerence " />
+							</f:facet>
+							
+							<h:outputLabel value="#{_expense.conference.name}" />
+							
+							
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Type " />
+							</f:facet>
+							
+							<h:outputLabel value="#{_expense.expenseType}" />
+							
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Value " />
+							</f:facet>
+							
+							<h:outputLabel value="#{_expense.amount} #{_expense.currency}" />
+							
+						</h:column>
+						
+						
+						
+					
+	
+	
+					</h:dataTable>
+				</div> <!-- end of col-md-12 -->
+			</div> <!-- end of the row -->	
+		
+		</h:form>
+		
+		
 
 	</ui:define>
 

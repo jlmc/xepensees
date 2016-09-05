@@ -1,52 +1,66 @@
 package org.xine.xepensees.business.expenses.boundary;
 
-import java.util.List;
+import java.net.URI;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
+import org.xine.xepensees.business.PaginatedListWrapper;
 import org.xine.xepensees.business.expenses.entity.Expense;
 import org.xine.xepensees.business.params.entity.QueryParameter;
 
-@Path("Expenses")
+//@ApplicationPath("/resources")
+@Path("expenses")
 @Produces({ MediaType.APPLICATION_JSON })
+@Consumes({ MediaType.APPLICATION_JSON })
 public class ExpensesResource {
 
 	@Inject
 	ExpensesMng manager;
 
+	@Context
+	UriInfo info;
+
 	@GET
-	@Path("/")
-	public Response all() {
-		final QueryParameter parameters = QueryParameter.empty();
-		final List<Expense> expenses = this.manager.search(parameters);
-
-		final GenericEntity<List<Expense>> genericEntity =
-				new GenericEntity<List<Expense>>(expenses) {};
-
-		return Response.ok(genericEntity).build();
-
+	@Path("{id : \\d+}")
+	public Expense get(@PathParam("id") final Long id) {
+		return this.manager.getExpense(id);
 	}
+
+	@POST
+	public Response create(@Valid Expense expense) {
+		final Expense created = this.manager.create(expense);
+
+		final URI uri = this.info.getAbsolutePathBuilder().path("/" + created.getId()).build();
+		return Response.created(uri).entity(created).build();
+	}
+	
 	@GET
-	@Path("{user}/{conference}")
-	public Response conferencesOf(
-			@PathParam("user") String user, 
-			@PathParam("conference") String conferenceName) {
-			final QueryParameter parameters = QueryParameter.
-													with("user", user).
-													and("conferenceName", conferenceName);
-		final List<Expense> expenses = this.manager.search(parameters);
+	public PaginatedListWrapper<Expense> search(
+			@DefaultValue("1") @QueryParam("page") Integer page,
+			@DefaultValue("10") @QueryParam("size") Integer pageSize, 
+			@QueryParam("conferenceId") Long conferenceId,
+			@QueryParam("user") String userId) {
 		
-		final GenericEntity<List<Expense>> genericEntity =
-				new GenericEntity<List<Expense>>(expenses) {};
-				
-		return Response.ok(genericEntity).build();
-				
+		final QueryParameter parameters = 
+			QueryParameter.with("conferenceId", conferenceId).
+							and("userId", userId).
+						page(page - 1, pageSize);
+			
+		return this.manager.search(parameters);
 	}
+	
+
 }

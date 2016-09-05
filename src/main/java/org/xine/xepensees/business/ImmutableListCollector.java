@@ -1,4 +1,4 @@
-package org.xine.xepensees.business.conferences.control;
+package org.xine.xepensees.business;
 
 import java.util.ArrayList;
 import java.util.Collections;
