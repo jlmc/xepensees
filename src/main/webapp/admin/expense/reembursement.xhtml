@@ -25,7 +25,7 @@
 			
 			<div class="row">
 			
-				<div class="col-md-12">
+				<div class="col-md-12 grid">
 				
 					<h:dataTable styleClass="table"
 						id="expenseesTable"
@@ -64,6 +64,13 @@
 	
 	
 					</h:dataTable>
+					
+					 <!--  Bind the pagination component to be displayed. -->
+				    <pagination direction-links="true" boundary-links="true"
+				                total-items="#{reembursementBean.paginatedListWrapper.totalResults}" 
+				                items-per-page="#{reembursementBean.paginatedListWrapper.pageSize}">
+				    </pagination>
+					
 				</div> <!-- end of col-md-12 -->
 			</div> <!-- end of the row -->	
 		

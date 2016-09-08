@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.xine.xepensees.business.security.entity.Identity;
-import org.xine.xepensees.business.users.entity.User;
+import org.xine.xepensees.business.user.entity.User;
 
 @Named
 @ViewScoped

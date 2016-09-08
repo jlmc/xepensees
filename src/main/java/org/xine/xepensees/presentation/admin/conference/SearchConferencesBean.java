@@ -8,8 +8,8 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.xine.xepensees.business.conferences.boundary.ConferencesMng;
-import org.xine.xepensees.business.conferences.entity.Conference;
+import org.xine.xepensees.business.conference.boundary.ConferencesMng;
+import org.xine.xepensees.business.conference.entity.Conference;
 import org.xine.xepensees.business.params.entity.QueryParameter;
 
 @Named

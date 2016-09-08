@@ -3,7 +3,7 @@ package org.xine.xepensees.business.security.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.xine.xepensees.business.users.entity.User;
+import org.xine.xepensees.business.user.entity.User;
 
 public class Identity implements Serializable {
 

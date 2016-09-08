@@ -17,5 +17,21 @@ public class FacesContextProducer implements Serializable {
 	public FacesContext get() {
 		return FacesContext.getCurrentInstance();
 	}
+	
+	// @Produces
+	// @SessionScoped
+	// public HttpSession session() {
+	// final HttpSession session = (HttpSession)
+	// FacesContext.getCurrentInstance().
+	// getExternalContext().getSession(true);
+	// return session;
+	// }
+
+	// @Produces
+	// @RequestScoped
+	// public HttpServletRequest request() {
+	// return (HttpServletRequest)
+	// FacesContext.getCurrentInstance().getExternalContext().getRequest();
+	// }
 
 }

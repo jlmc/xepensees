@@ -9,12 +9,12 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.xine.xepensees.business.conferences.boundary.ConferencesMng;
-import org.xine.xepensees.business.conferences.entity.Conference;
-import org.xine.xepensees.business.expenses.boundary.ExpensesMng;
-import org.xine.xepensees.business.expenses.entity.Currency;
-import org.xine.xepensees.business.expenses.entity.Expense;
-import org.xine.xepensees.business.expenses.entity.ExpenseType;
+import org.xine.xepensees.business.conference.boundary.ConferencesMng;
+import org.xine.xepensees.business.conference.entity.Conference;
+import org.xine.xepensees.business.expense.boundary.ExpensesMng;
+import org.xine.xepensees.business.expense.entity.Currency;
+import org.xine.xepensees.business.expense.entity.Expense;
+import org.xine.xepensees.business.expense.entity.ExpenseType;
 import org.xine.xepensees.business.security.entity.Identity;
 import org.xine.xepensees.presentation.faces.messages.Messages;
 

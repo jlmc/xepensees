@@ -9,8 +9,8 @@ import javax.inject.Inject;
 
 import org.xine.xepensees.business.security.entity.Anonymous;
 import org.xine.xepensees.business.security.entity.Identity;
-import org.xine.xepensees.business.users.control.UsersRepository;
-import org.xine.xepensees.business.users.entity.User;
+import org.xine.xepensees.business.user.control.UsersRepository;
+import org.xine.xepensees.business.user.entity.User;
 
 public class IdentityProvider implements Serializable {
 

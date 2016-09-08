@@ -9,9 +9,9 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.xine.xepensees.business.users.boundary.UsersManager;
-import org.xine.xepensees.business.users.entity.Permission;
-import org.xine.xepensees.business.users.entity.User;
+import org.xine.xepensees.business.user.boundary.UsersManager;
+import org.xine.xepensees.business.user.entity.Permission;
+import org.xine.xepensees.business.user.entity.User;
 import org.xine.xepensees.presentation.faces.RedirectView;
 import org.xine.xepensees.presentation.faces.messages.Messages;
 

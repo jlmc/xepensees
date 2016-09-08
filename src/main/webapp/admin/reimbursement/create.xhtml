@@ -1,10 +1,124 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
+<ui:composition template="/WEB-INF/template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:mj="http://mojarra.dev.java.net/mojarra_ext">
 
-</body>
-</html>
+	<ui:param name="pageTitle" value="ExpensEEs" />
+
+	<ui:define name="master">
+
+		<div class="page-header">
+			<h1>Create a new Reimbursement</h1>
+		</div>
+		
+		
+		
+		
+		
+		<h:form id="create">
+			<h:messages id="createUserMsgs" errorClass="alert-error" />
+
+			<fieldset>
+				<!-- Reimbursement Date -->
+				<h:panelGroup layout="block" styleClass="form-group aw-required #{_createReimbursementeBeanDate.valid ? '' : 'has-error'}">
+					<h:outputLabel styleClass="control-label" value="Date:" for="createReimbursementeBeanDate" />
+					
+					<h:inputText id="createReimbursementeBeanDate" 
+		 		  				 label="Date"
+		 		  				 styleClass="form-control"
+		 		  				 pt:type="date"
+		 		  				 binding="#{_createReimbursementeBeanDate}"/>
+				</h:panelGroup>
+				<!-- / Reimbursement Date -->
+				
+				<!-- list of expenses to Reimbursemente -->
+				<h:panelGroup style="form-group" layout="block">
+					<h:outputLabel styleClass="control-label" value="Expenses:" />
+					
+					<h:dataTable value="#{createReimbursementeBean.expenses}" var="_item" styleClass="table">
+						<h:column>
+							<f:facet name="header">
+                                <h:outputText value="Description"/>
+                            </f:facet>
+<!--                             <h:link outcome="/admin/expense/view"><f:param name="id" value="#{_item.id}"/> -->
+                                <h:outputText id="itemDescription" value="#{_item.description}"/>
+<!--                             </h:link> -->
+						</h:column>
+						<h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Date"/>
+                            </f:facet>
+                            <h:outputText id="itemDate" value="#{_item.date}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Expense Type"/>
+                            </f:facet>
+                            <h:outputText id="itemExpenseType" value="#{_item.expenseType}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Amount"/>
+                            </f:facet>
+                            <h:outputText id="itemAmount" value="#{_item.amount}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Currency"/>
+                            </f:facet>
+                            <h:outputText id="itemCurrency" value="#{_item.currency}"/>
+                        </h:column>
+                        <h:column footerClass="remove-column" headerClass="remove-column">
+                            <h:commandLink  styleClass="remove-button">
+                            	<i class="icon-red glyphicon glyphicon-remove"></i>
+                            </h:commandLink>
+                        </h:column>
+					</h:dataTable>
+				</h:panelGroup>
+				<!-- / list of expenses to Reimbursemente -->
+				
+				
+				
+				<h:panelGroup style="form-group" layout="block">
+					<h:outputLabel for="reimbursementBeanReimbursementCurrency" value="Currency:" styleClass="control-label"/>
+	               
+
+	                    <h:selectOneMenu  styleClass="form-control" id="reimbursementBeanReimbursementCurrency"
+	                                     value="#{reimbursementBean.reimbursement.currency}">
+	                        <f:selectItem/>
+	                        <f:selectItem itemValue="USD"/>
+	                        <f:selectItem itemValue="EURO"/>
+	                    </h:selectOneMenu>
+	                    <h:message for="reimbursementBeanReimbursementCurrency" styleClass="error"/>
+				
+				</h:panelGroup>
+				
+				<h:panelGroup style="form-group" layout="block">
+					<h:outputLabel for="reimbursementBeanReimbursementUser" value="User:" styleClass="control-label"/>
+					<h:inputText id="createReimbursementeBeanUser" 
+		 		  				 label="User"
+		 		  				 styleClass="form-control"
+		 		  				 binding="#{_createReimbursementeBeanUser}"/>
+				</h:panelGroup>
+
+
+				
+
+			</fieldset>
+			
+
+
+		</h:form>
+		
+		
+
+	</ui:define>
+
+</ui:composition>
+

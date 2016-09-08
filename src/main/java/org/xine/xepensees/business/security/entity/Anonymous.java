@@ -1,6 +1,6 @@
 package org.xine.xepensees.business.security.entity;
 
-import org.xine.xepensees.business.users.entity.User;
+import org.xine.xepensees.business.user.entity.User;
 
 public class Anonymous extends Identity {
 
