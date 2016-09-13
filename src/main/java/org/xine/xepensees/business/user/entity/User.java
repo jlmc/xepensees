@@ -56,7 +56,7 @@ public class User implements Serializable {
     @ElementCollection
     @CollectionTable(name = "t_user_roles", joinColumns = { @JoinColumn(name = "userId") })
 	@Enumerated(EnumType.STRING)
-    private final Set<Permission> permissions = EnumSet.noneOf(Permission.class);
+    private Set<Permission> permissions = EnumSet.noneOf(Permission.class);
     
     protected User() {}
     
@@ -79,8 +79,7 @@ public class User implements Serializable {
 	}
     
     protected void setPermissions(final Set<Permission> permissions) {
-    	this.permissions.clear();
-		this.permissions.addAll(permissions);
+    	this.permissions = permissions;
 	}
     
     public String getName() {
