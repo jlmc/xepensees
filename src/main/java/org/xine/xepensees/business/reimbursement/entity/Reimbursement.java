@@ -22,12 +22,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.xine.xepensees.business.expense.entity.Currency;
 import org.xine.xepensees.business.expense.entity.Expense;
 import org.xine.xepensees.business.persistence.control.LocalDateConverter;
 import org.xine.xepensees.business.user.entity.User;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "t_reimbursement")
 public class Reimbursement implements Serializable {
