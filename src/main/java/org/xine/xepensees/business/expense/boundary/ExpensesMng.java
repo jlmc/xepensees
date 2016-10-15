@@ -102,7 +102,7 @@ public class ExpensesMng {
 					this.helper.ilike(
 								builder, 
 								builder.lower(juser.get("email")),
-								String.valueOf(parameter.get("user")).toLowerCase(),
+								String.valueOf(parameter.get("userId")).toLowerCase(),
 								CriteriaHelper.MatchMode.EXACT);
 			predicates.add(userEmailLike);
 		}

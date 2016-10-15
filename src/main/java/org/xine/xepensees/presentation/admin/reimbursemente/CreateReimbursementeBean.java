@@ -28,16 +28,16 @@ public class CreateReimbursementeBean {
 
 	@PostConstruct
 	public void initialize() {
-		final PaginatedListWrapper<Expense> result = this.expensesMng.search(QueryParameter.empty());
-		this.expenses = result.getList();
+		final PaginatedListWrapper<Expense> result = expensesMng.search(QueryParameter.empty());
+		expenses = result.getList();
 	}
 
 	public Collection<Expense> getExpenses() {
-		return this.expenses;
+		return expenses;
 	}
 
 	public Currency getCurrency() {
-		return this.currency;
+		return currency;
 	}
 
 }

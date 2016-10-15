@@ -9,7 +9,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.xine.xepensees.business.user.boundary.UsersManager;
+import org.xine.xepensees.business.user.boundary.UsersMng;
 import org.xine.xepensees.business.user.entity.Permission;
 import org.xine.xepensees.business.user.entity.User;
 import org.xine.xepensees.presentation.faces.RedirectView;
@@ -24,7 +24,7 @@ public class CreateUserBean {
 	private Set<Permission> permissions = new HashSet<>();
 
 	@Inject
-	UsersManager usersManager;
+	UsersMng usersManager;
 	
 	@Inject
 	Messages messages;

@@ -40,9 +40,9 @@ public class ReimbursementMsg {
 		
 		if (params.containsNotNullValue("userId"))  {
 			Predicate usernameFilter = 
-					builder.equal(builder.lower(
-								  	builder.trim(
-										joinWithUser.get("email"))), String.valueOf(params.get("userId")).trim().toLowerCase());
+					builder.equal(
+								builder.lower(builder.trim(joinWithUser.get("email"))), 
+								String.valueOf(params.get("userId")).trim().toLowerCase());
 			predicates.add(usernameFilter);
 		}
 		

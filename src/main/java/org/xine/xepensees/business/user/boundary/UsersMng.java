@@ -17,7 +17,7 @@ import org.xine.xepensees.business.user.control.UsersRepository;
 import org.xine.xepensees.business.user.entity.User;
 
 @Stateless
-public class UsersManager {
+public class UsersMng {
 	
 	@Inject
 	UsersRepository usersRepository;

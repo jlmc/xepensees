@@ -1,0 +1,56 @@
+<ui:composition template="/WEB-INF/template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+	
+	
+	<ui:param name="pageTitle" value="ExpensEEs"/>
+	
+	<ui:define name="master">
+		<div class="page-header">
+			<h1>View all my reimbursements</h1>
+		</div>
+		
+		<h:form>
+			<h:dataTable id="reimbursementBeanPageItems" styleClass="data-table"
+				value="#{reimbursementsBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Conference" />
+					</f:facet>
+					<h:outputText id="itemConference" value="#{_item.conference.name}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Date" />
+					</f:facet>
+					<h:outputText id="itemDate" value="#{_item.date}">
+						<f:convertDateTime type="date" />
+					</h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Total amount" />
+					</f:facet>
+					<h:outputText id="forgeviewdisplayitemUser"
+						value="123" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Currency" />
+					</f:facet>
+					<h:outputText id="itemCurrency" value="#{_item.currency}" />
+				</h:column>
+				
+			</h:dataTable>
+
+		</h:form>
+	
+	</ui:define>
+	
+</ui:composition>

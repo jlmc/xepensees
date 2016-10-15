@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.xine.xepensees.business.conference.entity.Conference;
 import org.xine.xepensees.business.persistence.control.LocalDateConverter;
+import org.xine.xepensees.business.reimbursement.entity.Reimbursement;
 import org.xine.xepensees.business.user.entity.User;
 
 @XmlRootElement
@@ -55,7 +56,7 @@ public class Expense implements Serializable {
 	@NotNull
 	private ExpenseType expenseType;
 
-	@Size(max = 5)
+	@Size(max = 100)
 	private String description;
 
 	@NotNull
@@ -72,16 +73,22 @@ public class Expense implements Serializable {
 	@JoinColumn(name = "user_id", nullable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_user"))
 	private User user;
 
+	@ManyToOne
+	@JoinColumn(name = "reimbursement_id", nullable = true, foreignKey = @ForeignKey(name = "fk_expenses_reimbursement_id"))
+	private Reimbursement reimbursement;
+
+
+
 	public void setConference(Conference conference) {
 		this.conference = conference;
 	}
 
 	public Conference getConference() {
-		return this.conference;
+		return conference;
 	}
 
 	public User getUser() {
-		return this.user;
+		return user;
 	}
 
 	public void setUser(User user) {
@@ -89,7 +96,7 @@ public class Expense implements Serializable {
 	}
 
 	public Long getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(final Long id) {
@@ -97,7 +104,7 @@ public class Expense implements Serializable {
 	}
 
 	protected int getVersion() {
-		return this.version;
+		return version;
 	}
 
 	protected void setVersion(final int version) {
@@ -105,7 +112,7 @@ public class Expense implements Serializable {
 	}
 
 	public String getDescription() {
-		return this.description;
+		return description;
 	}
 
 	public void setDescription(final String description) {
@@ -113,7 +120,7 @@ public class Expense implements Serializable {
 	}
 
 	public LocalDate getDate() {
-		return this.date;
+		return date;
 	}
 
 	public void setDate(final LocalDate date) {
@@ -121,7 +128,7 @@ public class Expense implements Serializable {
 	}
 
 	public BigDecimal getAmount() {
-		return this.amount;
+		return amount;
 	}
 
 	public void setAmount(final BigDecimal amount) {
@@ -129,7 +136,7 @@ public class Expense implements Serializable {
 	}
 
 	public Currency getCurrency() {
-		return this.currency;
+		return currency;
 	}
 
 	public void setCurrency(final Currency currency) {
@@ -137,7 +144,7 @@ public class Expense implements Serializable {
 	}
 
 	public ExpenseType getExpenseType() {
-		return this.expenseType;
+		return expenseType;
 	}
 
 	public void setExpenseType(final ExpenseType expenseType) {
@@ -146,13 +153,13 @@ public class Expense implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Extense [id=" + this.id + ", version=" + this.version + ", amount=" + this.amount + ", description=" + this.description
-				+ ", date=" + this.date + "]";
+		return "Extense [id=" + id + ", version=" + version + ", amount=" + amount + ", description=" + description
+				+ ", date=" + date + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.id);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -168,7 +175,56 @@ public class Expense implements Serializable {
 		}
 		final Expense other = (Expense) obj;
 
-		return Objects.equals(this.id, other.id);
+		return Objects.equals(id, other.id);
 	}
 
+	public static class Builder {
+		private final Expense expense = new Expense();
+
+		public static Builder builder() {
+			return new Builder();
+		}
+
+		public Builder date(LocalDate date) {
+			expense.date = date;
+			return this;
+		}
+
+		public Builder description(String description) {
+			expense.description = description;
+			return this;
+		}
+
+		public Builder type(ExpenseType type) {
+			expense.expenseType = type;
+			return this;
+		}
+
+		public Builder euro() {
+			expense.currency = Currency.EURO;
+			return this;
+		}
+
+		public Builder amount(BigDecimal amount) {
+			expense.amount = amount;
+			return this;
+		}
+
+		public Builder version(int version) {
+			expense.version = version;
+			return this;
+		}
+
+		public Builder id(Long id) {
+			expense.id = id;
+			return this;
+		}
+
+		public Expense build() {
+			return expense;
+		}
+
+		private Builder() {
+		}
+	}
 }

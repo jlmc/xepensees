@@ -59,7 +59,7 @@ public class Conference implements Serializable {
 	protected Conference() {}
 
 	public Long getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setCity(final String city) {
@@ -67,7 +67,7 @@ public class Conference implements Serializable {
 	}
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	public void setName(final String name) {
@@ -75,7 +75,7 @@ public class Conference implements Serializable {
 	}
 
 	public LocalDate getDate() {
-		return this.date;
+		return date;
 	}
 
 	public void setDate(final LocalDate date) {
@@ -83,7 +83,7 @@ public class Conference implements Serializable {
 	}
 
 	public String getCity() {
-		return this.city;
+		return city;
 	}
 
 	public void setCountry(final String country) {
@@ -91,7 +91,7 @@ public class Conference implements Serializable {
 	}
 
 	public String getCountry() {
-		return this.country;
+		return country;
 	}
 
 	public void setId(final Long id) {
@@ -103,12 +103,12 @@ public class Conference implements Serializable {
 	}
 
 	protected int getVersion() {
-		return this.version;
+		return version;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.id);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -123,16 +123,46 @@ public class Conference implements Serializable {
 			return false;
 		}
 		final Conference other = (Conference) obj;
-		return Objects.equals(this.id, other.id);
+		return Objects.equals(id, other.id);
 	}
 
 	@Override
 	public String toString() {
-		return "Conference [id=" + this.id + ", name=" + this.name + "]";
+		return "Conference [id=" + id + ", name=" + name + "]";
 	}
 
 	public static Conference empty() {
 		return new Conference();
+	}
+
+	public static class Builder {
+		private final Conference conference = new Conference();
+
+		private Builder() {
+		}
+
+		public static Builder builder() {
+			return new Builder();
+		}
+
+		public Conference build() {
+			return conference;
+		}
+
+		public Builder id(Long id) {
+			conference.id = id;
+			return this;
+		}
+
+		public Builder name(String name) {
+			conference.name = name;
+			return this;
+		}
+
+		public Builder city(String city) {
+			conference.city = city;
+			return this;
+		}
 	}
 
 }

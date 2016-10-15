@@ -20,59 +20,116 @@
 		
 		
 		
-		<h:form id="expensesAdmin">
+		<h:form id="expensesAdminForm">
+
+			<h:messages errorClass="alert-error"/>
+
+			<fieldset>
 			
-			
-			<div class="row">
-			
-				<div class="col-md-12 grid">
+				<!-- speaker selection -->
+				<h:panelGroup
+					styleClass="form-group aw-required #{_reembursementSpeakerName.valid ? '' : 'has-error'}"
+					layout="block">
+					<h:outputLabel styleClass="control-label" value="Speaker:"
+						for="reembursementSpeakerName" />
+
+					<h:selectOneMenu id="reembursementSpeakerName"
+						styleClass="form-control" label="Name"
+						binding="#{_reembursementSpeakerName}" pt:required="required"
+						value="#{reimbursementAdministractionBean.forTheUser}">
+
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{reimbursementAdministractionBean.spekers}"
+							var="person" itemValue="#{person}" itemLabel="#{person.name}" />
+						<f:converter converterId="entityConverter" />
+						<f:ajax
+							listener="#{reimbursementAdministractionBean.onFiltersChange}"
+							render="@this" execute="@this" />
+					</h:selectOneMenu>
+
+
+				</h:panelGroup>
+				<!-- / speaker selection -->
 				
-					<h:dataTable styleClass="table"
-						id="expenseesTable"
-						value="#{reembursementBean.paginatedListWrapper.list}" var="_expense">
-	
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Confeerence " />
-							</f:facet>
-							
-							<h:outputLabel value="#{_expense.conference.name}" />
-							
-							
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Type " />
-							</f:facet>
-							
-							<h:outputLabel value="#{_expense.expenseType}" />
-							
-						</h:column>
-						
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Value " />
-							</f:facet>
-							
-							<h:outputLabel value="#{_expense.amount} #{_expense.currency}" />
-							
-						</h:column>
-						
-						
-						
+				
+				<!-- conference selection -->
+				<h:panelGroup layout="block" styleClass="form-group">
+					<h:outputLabel value="Conference:" styleClass="form-label" for="conference"/>
+					<h:selectOneMenu value="#{reimbursementAdministractionBean.forTheConference}" id="conference" 
+									styleClass="form-control">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{reimbursementAdministractionBean.conferences}"
+											var="conference" itemValue="#{conference}"
+											itemLabel="#{conference.name}" />
+						<f:converter converterId="entityConverter" />
+						<f:ajax listener="#{reimbursementAdministractionBean.onFiltersChange}" render="@this" execute="@this"/>
+					</h:selectOneMenu>
 					
-	
-	
+				</h:panelGroup>
+				<!-- / conference selection -->
+
+				<!-- expenses selection -->
+				<h:panelGroup  id="expensesTable">
+					<h3>Expenses</h3>
+				
+				
+					<h:dataTable rendered="true" styleClass="table table-striped table-hover table-condensed table-bordered" 
+								id="xx" value="#{reimbursementAdministractionBean.expenses}" var="expense">
+						<h:column>
+							<f:facet name="header">
+								 <h:outputText value=""/>
+							</f:facet>
+							<div style="text-align:center;" >
+								<!-- http://stackoverflow.com/questions/2524514/how-to-use-jsfs-hselectbooleancheckbox-with-hdatatable-to-create-one-object-p -->
+          						<h:selectBooleanCheckbox style="text-align:center;" 
+          								value="#{reimbursementAdministractionBean.checked[expense]}">
+          							<f:ajax listener="#{reimbursementAdministractionBean.onSelectExpense(expense)}" 
+          									execute="@this expenses" 
+          									render="expensesAdminForm:xx"/>
+          						</h:selectBooleanCheckbox>
+       						</div>						
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+                                <h:outputText value="Description"/>
+                            </f:facet>
+                            <h:outputText id="itemDescription" value="#{expense.description}"/>
+						</h:column>
+						<h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Date"/>
+                            </f:facet>
+                            <h:outputText id="itemDate" value="#{expense.date}"/>
+                        </h:column>
+                        
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Amount" style="display:block; text-align:right"/>
+                            </f:facet>
+                             <h:panelGroup style="display:block; text-align:right">
+		                            <h:outputText id="itemAmount" value="#{expense.amount}"/>
+                             </h:panelGroup>
+                        </h:column>
+                        <f:facet name="footer">
+					        <h:panelGroup style="display:block; text-align:right">
+					            <h:outputText value="Total: #{reimbursementAdministractionBean.total}" />
+					<!--             <h:outputText value="Total 2: #{shoppingCartBean.total2}" /> -->
+					<!--             <h:outputText value="Total 3: #{shoppingCartBean.total3}" /> -->
+					<!--             <h:outputText value="Total 4: #{shoppingCartBean.total4}" /> -->
+					        </h:panelGroup>
+					    </f:facet>
+
 					</h:dataTable>
-					
-					 <!--  Bind the pagination component to be displayed. -->
-				    <pagination direction-links="true" boundary-links="true"
-				                total-items="#{reembursementBean.paginatedListWrapper.totalResults}" 
-				                items-per-page="#{reembursementBean.paginatedListWrapper.pageSize}">
-				    </pagination>
-					
-				</div> <!-- end of col-md-12 -->
-			</div> <!-- end of the row -->	
+				</h:panelGroup>
+				<!-- / expenses selection -->
+
+
+
+
+			</fieldset>
+
+
+			
 		
 		</h:form>
 		

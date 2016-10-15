@@ -22,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -51,22 +52,26 @@ public class Reimbursement implements Serializable {
 	@Convert(converter = LocalDateConverter.class)
 	private LocalDate date;
 
-	@Enumerated
 	@NotNull
+	@Enumerated
 	private Currency currency;
 
+	@NotNull
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "user_id", nullable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_reimbursement_user"))
 	private User user;
 
-	@OneToMany
-	@JoinColumn(name = "expense_id", foreignKey = @ForeignKey(name = "fk_expenses_reimbursement_id"))
+	@NotNull
+	@Size(min = 1)
+	@OneToMany(mappedBy = "reimbursement")
+	// @JoinColumn(name = "reimbursement_id", foreignKey = @ForeignKey(name =
+	// "fk_expenses_reimbursement_id"))
 	private Set<Expense> expenses = new HashSet<>();
 
 	protected Reimbursement() {}
 
 	public Long getId() {
-		return this.id;
+		return id;
 	}
 
 	protected void setId(Long id) {
@@ -74,7 +79,7 @@ public class Reimbursement implements Serializable {
 	}
 
 	protected int getVersion() {
-		return this.version;
+		return version;
 	}
 
 	protected void setVersion(int version) {
@@ -82,7 +87,7 @@ public class Reimbursement implements Serializable {
 	}
 
 	public LocalDate getDate() {
-		return this.date;
+		return date;
 	}
 
 	protected void setDate(LocalDate date) {
@@ -90,7 +95,7 @@ public class Reimbursement implements Serializable {
 	}
 
 	public User getUser() {
-		return this.user;
+		return user;
 	}
 
 	protected void setUser(User user) {
@@ -98,7 +103,7 @@ public class Reimbursement implements Serializable {
 	}
 
 	public Set<Expense> getExpenses() {
-		return Collections.unmodifiableSet(this.expenses);
+		return Collections.unmodifiableSet(expenses);
 	}
 
 	protected void setExpenses(Set<Expense> expenses) {
@@ -107,7 +112,7 @@ public class Reimbursement implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.id);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -122,7 +127,7 @@ public class Reimbursement implements Serializable {
 			return false;
 		}
 		final Reimbursement other = (Reimbursement) obj;
-		return Objects.equals(this.id, other.id);
+		return Objects.equals(id, other.id);
 	}
 
 	public void add(Expense... expenses) {
@@ -139,6 +144,52 @@ public class Reimbursement implements Serializable {
 		}
 
 		this.expenses.removeAll(Arrays.asList(expenses));
+	}
+	
+	public static Builder builder() {
+		return new Builder();
+	}
+	
+	public static class Builder {
+		private final Reimbursement reimbursement;
+		
+		private Builder() {
+			reimbursement = new Reimbursement();
+		}
+		
+		public Reimbursement build() {
+			return reimbursement;
+		}
+
+		public Builder id(Long id) {
+			reimbursement.id = id;
+			return this;
+		}
+
+		public Builder version(int version) {
+			reimbursement.version = version;
+			return this;
+		}
+
+		public Builder date(LocalDate date) {
+			reimbursement.date = date;
+			return this;
+		}
+
+		public Builder currency(Currency currency) {
+			reimbursement.currency = currency;
+			return this;
+		}
+
+		public Builder user(String username, String name) {
+			reimbursement.user = User.of(username, name, "");
+			return this;
+		}
+
+		public Builder addExpense(Expense e) {
+			reimbursement.add(e);
+			return this;
+		}
 	}
 
 }

@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.xine.xepensees.business.params.entity.QueryParameter;
-import org.xine.xepensees.business.user.boundary.UsersManager;
+import org.xine.xepensees.business.user.boundary.UsersMng;
 import org.xine.xepensees.business.user.entity.User;
 
 @Named
@@ -18,7 +18,7 @@ public class SearchUserBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	private UsersManager usersManager;
+	private UsersMng usersManager;
 	
 	private String searchFor;
 	private String searchValue;
