@@ -23,6 +23,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.xine.xepensees.business.conference.entity.Conference;
 import org.xine.xepensees.business.persistence.control.LocalDateConverter;
@@ -73,11 +74,10 @@ public class Expense implements Serializable {
 	@JoinColumn(name = "user_id", nullable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_user"))
 	private User user;
 
+	@XmlTransient
 	@ManyToOne
 	@JoinColumn(name = "reimbursement_id", nullable = true, foreignKey = @ForeignKey(name = "fk_expenses_reimbursement_id"))
 	private Reimbursement reimbursement;
-
-
 
 	public void setConference(Conference conference) {
 		this.conference = conference;
@@ -149,6 +149,14 @@ public class Expense implements Serializable {
 
 	public void setExpenseType(final ExpenseType expenseType) {
 		this.expenseType = expenseType;
+	}
+
+	public Reimbursement getReimbursement() {
+		return reimbursement;
+	}
+
+	public void setReimbursement(Reimbursement reimbursement) {
+		this.reimbursement = reimbursement;
 	}
 
 	@Override

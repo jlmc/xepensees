@@ -1,13 +1,17 @@
 package org.xine.xepensees.business.reimbursement.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -21,8 +25,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -54,7 +58,7 @@ public class Reimbursement implements Serializable {
 
 	@NotNull
 	@Enumerated
-	private Currency currency;
+	private Currency currency = Currency.EURO;
 
 	@NotNull
 	@ManyToOne(optional = false)
@@ -62,11 +66,15 @@ public class Reimbursement implements Serializable {
 	private User user;
 
 	@NotNull
-	@Size(min = 1)
-	@OneToMany(mappedBy = "reimbursement")
+	// @Size(min = 1)
+	@OneToMany(mappedBy = "reimbursement", cascade = { CascadeType.ALL })
 	// @JoinColumn(name = "reimbursement_id", foreignKey = @ForeignKey(name =
 	// "fk_expenses_reimbursement_id"))
 	private Set<Expense> expenses = new HashSet<>();
+
+	@NotNull
+	@DecimalMax(value = "9999")
+	private BigDecimal total = BigDecimal.ZERO;
 
 	protected Reimbursement() {}
 
@@ -129,34 +137,70 @@ public class Reimbursement implements Serializable {
 		final Reimbursement other = (Reimbursement) obj;
 		return Objects.equals(id, other.id);
 	}
+	
 
-	public void add(Expense... expenses) {
+	public void add(Expense... expensess) {
 		if (expenses == null) {
 			throw new IllegalArgumentException("the expenses can't be null");
 		}
+		
+		final List<Expense> expensesOfOthersUsers = Arrays.stream(expensess).
+				filter(e -> !e.getUser().equals(user)).
+				collect(Collectors.toList());
+		
+		if (!expensesOfOthersUsers.isEmpty()) {
+			throw new IllegalArgumentException("all the expenses must be of the same user.");
+		}
+		
+		Arrays.stream(expensess).forEach(e -> {
+			expenses.add(e);
+			e.setReimbursement(this);
+			total = total.add(e.getAmount());
+		});
 
-		this.expenses.addAll(Arrays.asList(expenses));
 	}
 
-	public void remove(Expense... expenses) {
+
+	public void remove(Expense... expensess) {
 		if (expenses == null) {
 			throw new IllegalArgumentException("the expenses can't be null");
 		}
 
-		this.expenses.removeAll(Arrays.asList(expenses));
+		Arrays.stream(expensess).forEach(e -> {
+			e.setReimbursement(null);
+		});
+
+		expenses.removeAll(Arrays.asList(expenses));
 	}
 	
-	public static Builder builder() {
-		return new Builder();
+	public void clear() {
+		user = null;
+
+		remove(expenses.toArray(new Expense[0]));
+
+		total = BigDecimal.ZERO;
+	}
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	protected void setTotal(BigDecimal total) {
+		this.total = total;
+	}
+
+	public static Builder builder(User user) {
+		return new Builder(user);
 	}
 	
 	public static class Builder {
 		private final Reimbursement reimbursement;
 		
-		private Builder() {
+		public Builder(User user) {
 			reimbursement = new Reimbursement();
+			reimbursement.user = user;
 		}
-		
+
 		public Reimbursement build() {
 			return reimbursement;
 		}
@@ -181,8 +225,8 @@ public class Reimbursement implements Serializable {
 			return this;
 		}
 
-		public Builder user(String username, String name) {
-			reimbursement.user = User.of(username, name, "");
+		public Builder user(User user) {
+			reimbursement.user = user;
 			return this;
 		}
 
@@ -190,6 +234,13 @@ public class Reimbursement implements Serializable {
 			reimbursement.add(e);
 			return this;
 		}
+
 	}
+
+	public static Reimbursement empty() {
+		return new Reimbursement();
+	}
+
+
 
 }

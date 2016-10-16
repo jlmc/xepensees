@@ -6,7 +6,6 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.xine.xepensees.business.PaginatedListWrapper;
 import org.xine.xepensees.business.expense.boundary.ExpensesMng;
 import org.xine.xepensees.business.expense.entity.Currency;
 import org.xine.xepensees.business.expense.entity.Expense;
@@ -28,8 +27,8 @@ public class CreateReimbursementeBean {
 
 	@PostConstruct
 	public void initialize() {
-		final PaginatedListWrapper<Expense> result = expensesMng.search(QueryParameter.empty());
-		expenses = result.getList();
+		final Collection<Expense> result = expensesMng.search(QueryParameter.empty());
+		expenses = result;
 	}
 
 	public Collection<Expense> getExpenses() {

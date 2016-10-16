@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 import org.xine.xepensees.business.expense.entity.Currency;
 import org.xine.xepensees.business.expense.entity.Expense;
 import org.xine.xepensees.business.reimbursement.entity.Reimbursement;
+import org.xine.xepensees.business.user.entity.User;
 import org.xine.xepensees.presentation.faces.Presenter;
 
 @Presenter
@@ -33,7 +34,7 @@ public class ReimbursementsBean implements Serializable {
 						.description("Some dummy expense").build();
 
 				final Reimbursement reimbursement = 
-						Reimbursement.builder().
+						Reimbursement.builder(User.of("dummy@domain.com", "Dummy", "simple")).
 							id(Long.valueOf(i)).
 							version(1).
 							date(LocalDate.of(2009, 3, 1)).

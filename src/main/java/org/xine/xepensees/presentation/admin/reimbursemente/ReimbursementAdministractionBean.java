@@ -18,14 +18,18 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.xine.xepensees.business.PaginatedListWrapper;
 import org.xine.xepensees.business.conference.boundary.ConferencesMng;
 import org.xine.xepensees.business.conference.entity.Conference;
 import org.xine.xepensees.business.expense.boundary.ExpensesMng;
 import org.xine.xepensees.business.expense.entity.Expense;
+import org.xine.xepensees.business.expense.entity.ExpenseStatus;
 import org.xine.xepensees.business.params.entity.QueryParameter;
+import org.xine.xepensees.business.reimbursement.boundary.ReimbursementMsg;
+import org.xine.xepensees.business.reimbursement.entity.Reimbursement;
 import org.xine.xepensees.business.user.boundary.UsersMng;
 import org.xine.xepensees.business.user.entity.User;
+import org.xine.xepensees.presentation.faces.RedirectView;
+import org.xine.xepensees.presentation.faces.messages.Messages;
 
 @Named
 @ViewScoped
@@ -39,6 +43,12 @@ public class ReimbursementAdministractionBean implements Serializable {
 	protected ConferencesMng conferenceMng;
 	@Inject
 	protected UsersMng usersMng;
+	@Inject
+	protected ReimbursementMsg reimbursementMsg;
+	@Inject
+	protected Messages messages;
+
+	private Reimbursement reimbursement;
 
 	private User forTheUser;
 	private Conference forTheConference;
@@ -53,36 +63,37 @@ public class ReimbursementAdministractionBean implements Serializable {
 	private BigDecimal total = BigDecimal.ZERO;
 
 	@PostConstruct
-	public void searchExpenses() {
+	public void initialize() {
 		conferences = conferenceMng.search(QueryParameter.empty());
 		spekers = usersMng.search(QueryParameter.empty());
 
-		// "userId"
-		// "conferenceId"
-		final QueryParameter parameter = QueryParameter.empty();
-		if (forTheUser != null) {
-			parameter.and("userId", forTheUser.getEmail());
+		fetchExpenses();
+
+		reimbursement = Reimbursement.empty();
+	}
+
+	public RedirectView create() {
+		try {
+
+			final Reimbursement reimbursement = Reimbursement.builder(forTheUser).date(LocalDate.now()).build();
+
+			reimbursement.add(selectedExpenses.toArray(new Expense[0]));
+
+			reimbursementMsg.create(reimbursement);
+			messages.addSucessMessageFlash("Reimbursement created");
+		} catch (final Exception e) {
+			messages.addErrorMessageFlash(e.getMessage());
 		}
-		if (forTheConference != null) {
-			parameter.and("conferenceId", forTheConference.getId());
-		}
-		
-		
-		for (long i = 0; i < 5; i++) {
-			final Expense expense = Expense.Builder.builder().amount(BigDecimal.TEN).
-									description("expenses description " + i).
-									date(LocalDate.now()).
-									id(i).
-									build();
-			expenses.add(expense);
-		}
+
+		return RedirectView.of("admin/expense/reembursement");
 	}
 
 	public void onFiltersChange(AjaxBehaviorEvent event) {
-		System.out.println("on Filters Change " + event);
-		// TODO :: if the speaker is equals to previous, then do nothing
-		// otherwise clean every thing else
-		final QueryParameter params = QueryParameter.empty();
+		fetchExpenses();
+	}
+
+	private void fetchExpenses() {
+		final QueryParameter params = QueryParameter.with("status", ExpenseStatus.UNREDEEMED);
 
 		if (forTheUser != null) {
 			params.and("userId", forTheUser.getEmail());
@@ -92,13 +103,14 @@ public class ReimbursementAdministractionBean implements Serializable {
 			params.and("conferenceId", forTheConference.getId());
 		}
 
-		final PaginatedListWrapper<Expense> expensesWrapper = expensesMng.search(params);
-
-		redifineExpenses(expensesWrapper.getList());
+		redifineExpenses(expensesMng.search(params));
 	}
 
-	private void redifineExpenses(final List<Expense> toExpenses) {
+	private void redifineExpenses(final Collection<Expense> toExpenses) {
 		expenses.clear();
+
+		// reimbursement.clear();
+
 		expenses.addAll(toExpenses);
 		total = BigDecimal.ZERO;
 		checked.clear();
@@ -106,8 +118,6 @@ public class ReimbursementAdministractionBean implements Serializable {
 	}
 
 	public void onSelectExpense(Expense expense) {
-		System.out.println("On select Expenses: " + expense);
-
 		if (selectedExpenses.contains(expense)) {
 			selectedExpenses.remove(expense);
 			total = total.subtract(expense.getAmount());
@@ -152,7 +162,5 @@ public class ReimbursementAdministractionBean implements Serializable {
 	public Collection<Conference> getConferences() {
 		return conferences;
 	}
-
-	
 
 }

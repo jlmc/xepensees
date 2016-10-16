@@ -44,7 +44,7 @@
 						<f:converter converterId="entityConverter" />
 						<f:ajax
 							listener="#{reimbursementAdministractionBean.onFiltersChange}"
-							render="@this" execute="@this" />
+							render="@this expensesAdminForm:xx" execute="@this" />
 					</h:selectOneMenu>
 
 
@@ -62,7 +62,8 @@
 											var="conference" itemValue="#{conference}"
 											itemLabel="#{conference.name}" />
 						<f:converter converterId="entityConverter" />
-						<f:ajax listener="#{reimbursementAdministractionBean.onFiltersChange}" render="@this" execute="@this"/>
+						<f:ajax listener="#{reimbursementAdministractionBean.onFiltersChange}" 
+							render="@this expensesAdminForm:xx" execute="@this"/>
 					</h:selectOneMenu>
 					
 				</h:panelGroup>
@@ -128,7 +129,10 @@
 
 			</fieldset>
 
-
+			<button type="submit" jsf:action="#{reimbursementAdministractionBean.create}" 
+					class="btn btn-primary">
+				<span class="glyphicon glyphicon-log-out"></span>Create		
+			</button>
 			
 		
 		</h:form>

@@ -13,39 +13,13 @@
 	
 	<ui:define name="master">
 		<div class="page-header">
-			<h1>View all my reimbursements</h1>
+			<h1>View all my Expenses</h1>
 		</div>
 		
 		<h:form>
 			<h:dataTable id="reimbursementBeanPageItems" styleClass="data-table"
 				value="#{reimbursementsBean.pageItems}" var="_item">
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Conference" />
-					</f:facet>
-					<h:outputText id="itemConference" value="#{_item.conference.name}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Date" />
-					</f:facet>
-					<h:outputText id="itemDate" value="#{_item.date}">
-						<f:convertDateTime type="date" />
-					</h:outputText>
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Total amount" />
-					</f:facet>
-					<h:outputText id="forgeviewdisplayitemUser"
-						value="123" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Currency" />
-					</f:facet>
-					<h:outputText id="itemCurrency" value="#{_item.currency}" />
-				</h:column>
+				
 				
 			</h:dataTable>
 

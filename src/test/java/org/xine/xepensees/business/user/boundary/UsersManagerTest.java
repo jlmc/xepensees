@@ -15,7 +15,7 @@ import javax.validation.Validator;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InOrder;
-import org.xine.xepensees.business.user.boundary.UsersManager;
+import org.xine.xepensees.business.user.boundary.UsersMng;
 import org.xine.xepensees.business.user.control.EncryptPassword;
 import org.xine.xepensees.business.user.control.UsersRepository;
 import org.xine.xepensees.business.user.entity.User;
@@ -26,7 +26,7 @@ public class UsersManagerTest {
 	UsersRepository usersRepositoryMock;
 	Validator validatorMock;
 	
-	UsersManager usersManager;
+	UsersMng usersManager;
 
 	@Before
 	public void initialize() {
@@ -34,7 +34,7 @@ public class UsersManagerTest {
 		this.loggerMock = mock(Logger.class);
 		this.validatorMock = mock(Validator.class);
 
-		this.usersManager = new UsersManager();
+		this.usersManager = new UsersMng();
 		this.usersManager.logger = this.loggerMock;
 		this.usersManager.encryptPassword = new EncryptPassword();
 		this.usersManager.validator = this.validatorMock;

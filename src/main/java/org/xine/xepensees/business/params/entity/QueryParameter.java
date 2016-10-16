@@ -21,11 +21,11 @@ public class QueryParameter implements Serializable {
 	
 	private QueryParameter(String name, Object value) {
 		this();
-        this.parameters.put(name, value);
+        parameters.put(name, value);
 	}
 	
 	private QueryParameter(){
-		this.parameters = new HashMap<>();
+		parameters = new HashMap<>();
 	}
 	
 	public static QueryParameter empty() {
@@ -37,7 +37,7 @@ public class QueryParameter implements Serializable {
 	}
 	
 	public QueryParameter and(String name, Object value){
-        this.parameters.put(name, value);
+        parameters.put(name, value);
         return this;
     }
 
@@ -49,18 +49,18 @@ public class QueryParameter implements Serializable {
 			throw new IllegalArgumentException("the page length should be greater or equals than zero.");
 		}
 		
-		this.page = pageNumber;
+		page = pageNumber;
 		this.pageLength = pageLength;
 		
 		return this;
 	}
 	
-	public Object get(String key) {
-		return this.parameters.get(key);
+	public <T> T get(String key) {
+		return (T) parameters.get(key);
 	}
 
 	public boolean contains(String key) {
-		return this.parameters.containsKey(key);
+		return parameters.containsKey(key);
 	}
 
 	public boolean containsNotNullValue(String key) {
@@ -68,18 +68,18 @@ public class QueryParameter implements Serializable {
 	}
 
 	public Map<String, Object> parameters() {
-		return Collections.unmodifiableMap(this.parameters);
+		return Collections.unmodifiableMap(parameters);
 	}
 	
 	public int getFirtsRecord() {
-		return this.page * this.pageLength;
+		return page * pageLength;
 	}
 	
 	public int getPageLength() {
-		return this.pageLength;
+		return pageLength;
 	}
 
 	public Integer getPage() {
-		return this.page;
+		return page;
 	}
 }

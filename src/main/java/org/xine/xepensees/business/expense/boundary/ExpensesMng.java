@@ -1,6 +1,7 @@
 package org.xine.xepensees.business.expense.boundary;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -15,9 +16,9 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
 
-import org.xine.xepensees.business.PaginatedListWrapper;
 import org.xine.xepensees.business.conference.entity.Conference;
 import org.xine.xepensees.business.expense.entity.Expense;
+import org.xine.xepensees.business.expense.entity.ExpenseStatus;
 import org.xine.xepensees.business.params.entity.QueryParameter;
 import org.xine.xepensees.business.persistence.control.CriteriaHelper;
 import org.xine.xepensees.business.user.entity.User;
@@ -27,96 +28,55 @@ public class ExpensesMng {
 
 	@Inject
 	Logger tracer;
-	
+
 	@PersistenceContext(unitName = "x-expensees")
 	EntityManager em;
-	
+
 	@Inject
 	CriteriaHelper helper;
 
 	public Expense create(@NotNull final Expense expense) {
-		return this.em.merge(expense);
-	}
-
-	public PaginatedListWrapper<Expense> search(QueryParameter parameter) {
-		final PaginatedListWrapper<Expense> wrapper = new PaginatedListWrapper<>();
-		
-		wrapper.setTotalResults(count(parameter));
-		wrapper.setCurrentPage(parameter.getPage() + 1);
-		wrapper.setPageSize(parameter.getPageLength());
-
-		wrapper.setList(list(parameter));
-		
-		
-		return wrapper;
-	}
-
-	private int count(QueryParameter parameter) {
-		final CriteriaBuilder builder = this.em.getCriteriaBuilder();
-		final CriteriaQuery<Long> cQuery = builder.createQuery(Long.class);
-		
-		final Root<Expense> expenses = cQuery.from(Expense.class);
-		
-		final Join<Expense, User> juser = expenses.join("user");
-		final Join<Expense, Conference> jconference = expenses.join("conference");
-
-		final List<Predicate> predicates = builderFilterQuery(parameter, builder, expenses, juser, jconference);
-		
-        return this.em.
-        			createQuery(cQuery.
-        						select(builder.count(expenses)).
-        						where(predicates.toArray(new Predicate[0]))).
-        			getSingleResult().
-        			intValue();
-	}
-	
-	private List<Expense> list(QueryParameter parameter) {
-		final CriteriaBuilder builder = this.em.getCriteriaBuilder();
-		final CriteriaQuery<Expense> cQuery = builder.createQuery(Expense.class);
-
-		final Root<Expense> expenses = cQuery.from(Expense.class);
-		final Join<Expense, User> juser = (Join) expenses.fetch("user");
-		final Join<Expense, Conference> jconference = (Join) expenses.fetch("conference");
-		
-		final List<Predicate> predicates = builderFilterQuery(parameter, builder, expenses, juser, jconference);
-
-		return this.em.createQuery(cQuery.
-									select(expenses).
-									where(predicates.toArray(new Predicate[0]))).
-				setFirstResult(parameter.getFirtsRecord()).
-				setMaxResults(parameter.getPageLength()).
-				getResultList();
-	}
-
-	private List<Predicate> builderFilterQuery(
-			QueryParameter parameter,
-			final CriteriaBuilder builder,
-			final Root<Expense> expenses, 
-			Join<Expense, User> juser, 
-			Join<Expense, Conference> jconference) {
-		
-		final List<Predicate> predicates = new ArrayList<>(0);
-
-		if (parameter.containsNotNullValue("userId")) {
-			final Predicate userEmailLike = 
-					this.helper.ilike(
-								builder, 
-								builder.lower(juser.get("email")),
-								String.valueOf(parameter.get("userId")).toLowerCase(),
-								CriteriaHelper.MatchMode.EXACT);
-			predicates.add(userEmailLike);
-		}
-		
-		if (parameter.containsNotNullValue("conferenceId")) {
-			final Predicate conferenceNameLike = 
-					builder.equal(jconference.get("id"), parameter.get("conferenceId"));
-			predicates.add(conferenceNameLike);
-		}
-		return predicates;
+		return em.merge(expense);
 	}
 
 	public Expense getExpense(Long id) {
-		return this.em.find(Expense.class, id);
+		return em.find(Expense.class, id);
+	}
+
+	public Collection<Expense> search(QueryParameter parameters) {
+		final CriteriaBuilder builder = em.getCriteriaBuilder();
+		final CriteriaQuery<Expense> cQuery = builder.createQuery(Expense.class);
+
+		final Root<Expense> expenses = cQuery.from(Expense.class);
+		final Join<Expense, Conference> fetchWithConference = (Join) expenses.fetch("conference");
+		final Join<Expense, User> fetchWithUser = (Join) expenses.fetch("user");
+
+		final List<Predicate> predicates = new ArrayList<>();
+
+		if (parameters.containsNotNullValue("conferenceId")) {
+			predicates.add(builder.equal(fetchWithConference.get("id"), parameters.<Long>get("conferenceId")));
+		}
+		
+		if (parameters.containsNotNullValue("userId")) {
+			predicates.add(builder.equal(builder.lower(fetchWithUser.get("email")),
+					parameters.<String>get("userId").toLowerCase()));
+		}
+
+		if (parameters.containsNotNullValue("status")) {
+			final ExpenseStatus status = parameters.get("status");
+			if (ExpenseStatus.UNREDEEMED.equals(status)) {
+				predicates.add(builder.isNull(expenses.get("reimbursement")));
+			} else if (ExpenseStatus.REDEEMED.equals(status)) {
+				predicates.add(builder.isNotNull(expenses.get("reimbursement")));
+			}
+		}
+
+		return em.createQuery(cQuery.
+				select(expenses).
+				where(predicates.toArray(new Predicate[0]))).
+				setFirstResult(parameters.getFirtsRecord()).
+				setMaxResults(parameters.getPageLength()).
+				getResultList();
 	}
 
 }
