@@ -25,7 +25,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
-import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -66,14 +66,13 @@ public class Reimbursement implements Serializable {
 	private User user;
 
 	@NotNull
-	// @Size(min = 1)
-	@OneToMany(mappedBy = "reimbursement", cascade = { CascadeType.ALL })
+	@OneToMany(mappedBy = "reimbursement", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	// @JoinColumn(name = "reimbursement_id", foreignKey = @ForeignKey(name =
 	// "fk_expenses_reimbursement_id"))
 	private Set<Expense> expenses = new HashSet<>();
 
 	@NotNull
-	@DecimalMax(value = "9999")
+	@DecimalMin(value = "0.1", message = "{org.xine.xepensees.business.reimbursement.entity.reimbursement.total}")
 	private BigDecimal total = BigDecimal.ZERO;
 
 	protected Reimbursement() {}
@@ -98,7 +97,7 @@ public class Reimbursement implements Serializable {
 		return date;
 	}
 
-	protected void setDate(LocalDate date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
@@ -106,7 +105,7 @@ public class Reimbursement implements Serializable {
 		return user;
 	}
 
-	protected void setUser(User user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
@@ -116,6 +115,14 @@ public class Reimbursement implements Serializable {
 
 	protected void setExpenses(Set<Expense> expenses) {
 		this.expenses = expenses;
+	}
+
+	public Currency getCurrency() {
+		return currency;
+	}
+
+	protected void setCurrency(Currency currency) {
+		this.currency = currency;
 	}
 
 	@Override
@@ -138,6 +145,9 @@ public class Reimbursement implements Serializable {
 		return Objects.equals(id, other.id);
 	}
 	
+	public boolean contains(Expense expense) {
+		return expenses.contains(expense);
+	}
 
 	public void add(Expense... expensess) {
 		if (expenses == null) {
@@ -160,7 +170,6 @@ public class Reimbursement implements Serializable {
 
 	}
 
-
 	public void remove(Expense... expensess) {
 		if (expenses == null) {
 			throw new IllegalArgumentException("the expenses can't be null");
@@ -168,16 +177,13 @@ public class Reimbursement implements Serializable {
 
 		Arrays.stream(expensess).forEach(e -> {
 			e.setReimbursement(null);
+			expenses.remove(e);
+			total = total.subtract(e.getAmount());
 		});
-
-		expenses.removeAll(Arrays.asList(expenses));
 	}
 	
 	public void clear() {
-		user = null;
-
 		remove(expenses.toArray(new Expense[0]));
-
 		total = BigDecimal.ZERO;
 	}
 
@@ -189,58 +195,7 @@ public class Reimbursement implements Serializable {
 		this.total = total;
 	}
 
-	public static Builder builder(User user) {
-		return new Builder(user);
-	}
-	
-	public static class Builder {
-		private final Reimbursement reimbursement;
-		
-		public Builder(User user) {
-			reimbursement = new Reimbursement();
-			reimbursement.user = user;
-		}
-
-		public Reimbursement build() {
-			return reimbursement;
-		}
-
-		public Builder id(Long id) {
-			reimbursement.id = id;
-			return this;
-		}
-
-		public Builder version(int version) {
-			reimbursement.version = version;
-			return this;
-		}
-
-		public Builder date(LocalDate date) {
-			reimbursement.date = date;
-			return this;
-		}
-
-		public Builder currency(Currency currency) {
-			reimbursement.currency = currency;
-			return this;
-		}
-
-		public Builder user(User user) {
-			reimbursement.user = user;
-			return this;
-		}
-
-		public Builder addExpense(Expense e) {
-			reimbursement.add(e);
-			return this;
-		}
-
-	}
-
 	public static Reimbursement empty() {
 		return new Reimbursement();
 	}
-
-
-
 }

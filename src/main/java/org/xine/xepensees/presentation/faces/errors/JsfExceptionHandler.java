@@ -15,6 +15,9 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
+import javax.validation.ConstraintViolation;
+
+import org.xine.xepensees.business.BusinessException;
 
 public class JsfExceptionHandler extends ExceptionHandlerWrapper {
 
@@ -23,12 +26,12 @@ public class JsfExceptionHandler extends ExceptionHandlerWrapper {
 	private final ExceptionHandler wrapped;
 
 	public JsfExceptionHandler(final ExceptionHandler wrapper) {
-		this.wrapped = wrapper;
+		wrapped = wrapper;
 	}
 
 	@Override
 	public ExceptionHandler getWrapped() {
-		return this.wrapped;
+		return wrapped;
 	}
 
 	@Override
@@ -61,7 +64,7 @@ public class JsfExceptionHandler extends ExceptionHandlerWrapper {
 					addFacesErrorMessage(isHandlerException.get());
 				} else {
 					removeTheEvent = true;
-	                this.logger.log(Level.SEVERE, "SYSTEM ERROR: " + exceptionThrows.getMessage() + "\n"+ exceptionThrows.toString());
+	                logger.log(Level.SEVERE, "SYSTEM ERROR: " + exceptionThrows.getMessage() + "\n"+ exceptionThrows.toString());
 	                redirect("/error.xhtml");
 				}
 
@@ -86,11 +89,29 @@ public class JsfExceptionHandler extends ExceptionHandlerWrapper {
 	}
 
 	private Optional<Throwable> getHandlerException(final Throwable throwable) {
+		if (javax.validation.ConstraintViolationException.class.isAssignableFrom(throwable.getClass())) {
+			
+			final ConstraintViolation<?> violation = ((javax.validation.ConstraintViolationException) throwable)
+					.getConstraintViolations().iterator().next();
+
+			final String propertyPath = String.valueOf(violation.getPropertyPath());
+			final String message = violation.getMessage();
+			
+			return Optional.of(new IllegalArgumentException(propertyPath + " " + message));
+		}
+
+		if (throwable instanceof BusinessException) {
+			return Optional.of(throwable);
+		}
+
 		if (java.lang.IllegalArgumentException.class.isAssignableFrom(throwable.getClass())) {
 			return Optional.of((Exception) throwable);
-		} else if (throwable.getCause() != null) {
+		}
+
+		if (throwable.getCause() != null) {
 			return getHandlerException(throwable.getCause());
 		}
+
 		return Optional.empty();
 		
 	}

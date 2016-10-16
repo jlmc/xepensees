@@ -7,24 +7,52 @@
 	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:jsf="http://xmlns.jcp.org/jsf">
-	
-	
-	<ui:param name="pageTitle" value="ExpensEEs"/>
-	
+
+
+	<ui:param name="pageTitle" value="ExpensEEs" />
+
 	<ui:define name="master">
 		<div class="page-header">
 			<h1>View all my Expenses</h1>
 		</div>
-		
+
 		<h:form>
-			<h:dataTable id="reimbursementBeanPageItems" styleClass="data-table"
-				value="#{reimbursementsBean.pageItems}" var="_item">
-				
-				
-			</h:dataTable>
+			<div class="col-md-12">
+
+
+				<h:dataTable id="reimbursementBeanPageItems" styleClass="table table-condensed"
+					value="#{viewExpensesBean.get()}" var="expense">
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Description" />
+						</f:facet>
+						<h:outputText id="itemDescription" value="#{expense.description}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Date" />
+						</f:facet>
+						<h:outputText id="itemDate" value="#{expense.date}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Amount"
+								style="display:block; text-align:right" />
+						</f:facet>
+						<h:panelGroup style="display:block; text-align:right">
+							<h:outputText id="itemAmount" value="#{expense.amount}" />
+						</h:panelGroup>
+					</h:column>
+
+
+				</h:dataTable>
+
+			</div>
 
 		</h:form>
-	
+
 	</ui:define>
-	
+
 </ui:composition>

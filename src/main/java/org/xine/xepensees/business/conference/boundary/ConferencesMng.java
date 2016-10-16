@@ -23,39 +23,19 @@ public class ConferencesMng {
 			throw new IllegalArgumentException("the conference should be not Null");
 		}
 		
-		return this.repository.save(conference);
+		return repository.save(conference);
 	}
 
 	public Collection<Conference> all() {
-		return Collections.unmodifiableList(this.repository.all());
+		return Collections.unmodifiableList(repository.all());
 	}
 	
 	public List<Conference> search(QueryParameter parameter) {
-		return Collections.unmodifiableList(this.repository.search(parameter));
-		
-		
-//		filter.getFirtsResult();
-//		filter.getMaxResults();
-		
-		//int total = this.conferences.size();
-//		
-//		int numberOfPages = total % pageSize > 0 ?  total / pageSize : total / pageSize + 1;
-//		int firtsElement = pageNumber * pageSize;
-		
-//		List<Conference> currentItens = 
-//				Collections.unmodifiableList(
-//						this.conferences.stream().
-//						skip(filter.getFirtsResult()).
-//						limit(filter.getMaxResults()).
-//						collect(Collectors.toCollection(ArrayList::new)));
-//		
-//		return currentItens;
+		return Collections.unmodifiableList(repository.search(parameter));
 	}
 
 	public Conference getConference(Long id) {
-		return this.repository.get(id);
-		
-		//return this.conferences.stream().filter( c -> c.getId().equals(id)).findAny().map(c-> c ).orElse(Conference.empty());
+		return repository.get(id);
 	}
 	
 	

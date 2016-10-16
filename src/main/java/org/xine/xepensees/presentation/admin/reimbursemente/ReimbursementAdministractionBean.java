@@ -1,16 +1,13 @@
 package org.xine.xepensees.presentation.admin.reimbursemente;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -48,55 +45,54 @@ public class ReimbursementAdministractionBean implements Serializable {
 	@Inject
 	protected Messages messages;
 
+	// @Model
 	private Reimbursement reimbursement;
-
-	private User forTheUser;
 	private Conference forTheConference;
 
-	private final List<Expense> expenses = new LinkedList<>();
+	private final List<Expense> availableExpenses = new LinkedList<>();
 
 	private Collection<User> spekers;
-	private Collection<Conference> conferences;
+	private Collection<Conference> availableConferences;
 
-	private final Set<Expense> selectedExpenses = new HashSet<>();
 	private final Map<Expense, Boolean> checked = new HashMap<Expense, Boolean>();
-	private BigDecimal total = BigDecimal.ZERO;
+
 
 	@PostConstruct
 	public void initialize() {
-		conferences = conferenceMng.search(QueryParameter.empty());
+		reimbursement = Reimbursement.empty();
+
+		availableConferences = conferenceMng.search(QueryParameter.empty());
 		spekers = usersMng.search(QueryParameter.empty());
 
 		fetchExpenses();
-
-		reimbursement = Reimbursement.empty();
 	}
 
 	public RedirectView create() {
-		try {
 
-			final Reimbursement reimbursement = Reimbursement.builder(forTheUser).date(LocalDate.now()).build();
 
-			reimbursement.add(selectedExpenses.toArray(new Expense[0]));
+		// final Reimbursement reimbursement =
+		// Reimbursement.builder(forTheUser).date(LocalDate.now()).build();
 
-			reimbursementMsg.create(reimbursement);
-			messages.addSucessMessageFlash("Reimbursement created");
-		} catch (final Exception e) {
-			messages.addErrorMessageFlash(e.getMessage());
-		}
+		// reimbursement.add(selectedExpenses.toArray(new Expense[0]));
 
-		return RedirectView.of("admin/expense/reembursement");
+		reimbursement.setDate(LocalDate.now());
+
+		reimbursementMsg.create(reimbursement);
+		messages.addSucessMessageFlash("Reimbursement created");
+
+		return RedirectView.of("/admin/expense/reembursement");
 	}
 
 	public void onFiltersChange(AjaxBehaviorEvent event) {
 		fetchExpenses();
 	}
 
+
 	private void fetchExpenses() {
 		final QueryParameter params = QueryParameter.with("status", ExpenseStatus.UNREDEEMED);
 
-		if (forTheUser != null) {
-			params.and("userId", forTheUser.getEmail());
+		if (reimbursement.getUser() != null) {
+			params.and("userId", reimbursement.getUser().getEmail());
 		}
 
 		if (forTheConference != null) {
@@ -107,36 +103,23 @@ public class ReimbursementAdministractionBean implements Serializable {
 	}
 
 	private void redifineExpenses(final Collection<Expense> toExpenses) {
-		expenses.clear();
+		availableExpenses.clear();
+		availableExpenses.addAll(toExpenses);
 
-		// reimbursement.clear();
-
-		expenses.addAll(toExpenses);
-		total = BigDecimal.ZERO;
+		reimbursement.clear();
 		checked.clear();
-		selectedExpenses.clear();
 	}
 
 	public void onSelectExpense(Expense expense) {
-		if (selectedExpenses.contains(expense)) {
-			selectedExpenses.remove(expense);
-			total = total.subtract(expense.getAmount());
+		if (reimbursement.contains(expense)) {
+			reimbursement.remove(expense);
 		} else {
-			selectedExpenses.add(expense);
-			total = total.add(expense.getAmount());
+			reimbursement.add(expense);
 		}
 	}
 
-	public List<Expense> getExpenses() {
-		return Collections.unmodifiableList(expenses);
-	}
-
-	public User getForTheUser() {
-		return forTheUser;
-	}
-
-	public void setForTheUser(User forTheUser) {
-		this.forTheUser = forTheUser;
+	public List<Expense> getAvailableExpenses() {
+		return Collections.unmodifiableList(availableExpenses);
 	}
 
 	public void setForTheConference(Conference forTheConference) {
@@ -147,10 +130,6 @@ public class ReimbursementAdministractionBean implements Serializable {
 		return forTheConference;
 	}
 
-	public BigDecimal getTotal() {
-		return total;
-	}
-
 	public Map<Expense, Boolean> getChecked() {
 		return checked;
 	}
@@ -159,8 +138,16 @@ public class ReimbursementAdministractionBean implements Serializable {
 		return spekers;
 	}
 
-	public Collection<Conference> getConferences() {
-		return conferences;
+	public Collection<Conference> getAvailableConferences() {
+		return Collections.unmodifiableCollection(availableConferences);
+	}
+
+	public Reimbursement getReimbursement() {
+		return reimbursement;
+	}
+
+	public void setReimbursement(Reimbursement reimbursement) {
+		this.reimbursement = reimbursement;
 	}
 
 }

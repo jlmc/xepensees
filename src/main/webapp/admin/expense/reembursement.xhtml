@@ -22,21 +22,21 @@
 		
 		<h:form id="expensesAdminForm">
 
-			<h:messages errorClass="alert-error"/>
+			<h:messages errorClass="alert-error" id="msgs"/>
 
 			<fieldset>
 			
 				<!-- speaker selection -->
 				<h:panelGroup
 					styleClass="form-group aw-required #{_reembursementSpeakerName.valid ? '' : 'has-error'}"
-					layout="block">
+					layout="block" id="reembursementSpeakerGroup">
 					<h:outputLabel styleClass="control-label" value="Speaker:"
 						for="reembursementSpeakerName" />
 
 					<h:selectOneMenu id="reembursementSpeakerName"
-						styleClass="form-control" label="Name"
+						styleClass="form-control" label="Speaker"
 						binding="#{_reembursementSpeakerName}" pt:required="required"
-						value="#{reimbursementAdministractionBean.forTheUser}">
+						value="#{reimbursementAdministractionBean.reimbursement.user}">
 
 						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 						<f:selectItems value="#{reimbursementAdministractionBean.spekers}"
@@ -44,7 +44,8 @@
 						<f:converter converterId="entityConverter" />
 						<f:ajax
 							listener="#{reimbursementAdministractionBean.onFiltersChange}"
-							render="@this expensesAdminForm:xx" execute="@this" />
+							render="@this expensesAdminForm:xx expensesAdminForm:reembursementSpeakerGroup expensesAdminForm:msgs" 
+							execute="@this" />
 					</h:selectOneMenu>
 
 
@@ -58,7 +59,7 @@
 					<h:selectOneMenu value="#{reimbursementAdministractionBean.forTheConference}" id="conference" 
 									styleClass="form-control">
 						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
-						<f:selectItems value="#{reimbursementAdministractionBean.conferences}"
+						<f:selectItems value="#{reimbursementAdministractionBean.availableConferences}"
 											var="conference" itemValue="#{conference}"
 											itemLabel="#{conference.name}" />
 						<f:converter converterId="entityConverter" />
@@ -75,7 +76,7 @@
 				
 				
 					<h:dataTable rendered="true" styleClass="table table-striped table-hover table-condensed table-bordered" 
-								id="xx" value="#{reimbursementAdministractionBean.expenses}" var="expense">
+								id="xx" value="#{reimbursementAdministractionBean.availableExpenses}" var="expense">
 						<h:column>
 							<f:facet name="header">
 								 <h:outputText value=""/>
@@ -113,10 +114,7 @@
                         </h:column>
                         <f:facet name="footer">
 					        <h:panelGroup style="display:block; text-align:right">
-					            <h:outputText value="Total: #{reimbursementAdministractionBean.total}" />
-					<!--             <h:outputText value="Total 2: #{shoppingCartBean.total2}" /> -->
-					<!--             <h:outputText value="Total 3: #{shoppingCartBean.total3}" /> -->
-					<!--             <h:outputText value="Total 4: #{shoppingCartBean.total4}" /> -->
+					            <h:outputText value="Total: #{reimbursementAdministractionBean.reimbursement.total}" />
 					        </h:panelGroup>
 					    </f:facet>
 
@@ -124,20 +122,15 @@
 				</h:panelGroup>
 				<!-- / expenses selection -->
 
-
-
-
 			</fieldset>
-
-			<button type="submit" jsf:action="#{reimbursementAdministractionBean.create}" 
-					class="btn btn-primary">
-				<span class="glyphicon glyphicon-log-out"></span>Create		
-			</button>
+			
+			<h:commandLink action="#{reimbursementAdministractionBean.create}" value="Create" styleClass="btn btn-primary">
+				<span class="glyphicon glyphicon-log-out"></span>
+			</h:commandLink>
+				
 			
 		
 		</h:form>
-		
-		
 
 	</ui:define>
 
