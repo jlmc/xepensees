@@ -45,7 +45,6 @@ public class ReimbursementAdministractionBean implements Serializable {
 	@Inject
 	protected Messages messages;
 
-	// @Model
 	private Reimbursement reimbursement;
 	private Conference forTheConference;
 
@@ -63,18 +62,10 @@ public class ReimbursementAdministractionBean implements Serializable {
 
 		availableConferences = conferenceMng.search(QueryParameter.empty());
 		spekers = usersMng.search(QueryParameter.empty());
-
-		fetchExpenses();
+		// fetchExpenses();
 	}
 
 	public RedirectView create() {
-
-
-		// final Reimbursement reimbursement =
-		// Reimbursement.builder(forTheUser).date(LocalDate.now()).build();
-
-		// reimbursement.add(selectedExpenses.toArray(new Expense[0]));
-
 		reimbursement.setDate(LocalDate.now());
 
 		reimbursementMsg.create(reimbursement);
@@ -86,7 +77,6 @@ public class ReimbursementAdministractionBean implements Serializable {
 	public void onFiltersChange(AjaxBehaviorEvent event) {
 		fetchExpenses();
 	}
-
 
 	private void fetchExpenses() {
 		final QueryParameter params = QueryParameter.with("status", ExpenseStatus.UNREDEEMED);

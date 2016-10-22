@@ -4,9 +4,9 @@ package org.xine.xepensees.business.reimbursement.boundary;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import javax.ejb.Stateless;
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +16,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import javax.validation.Validator;
 
@@ -33,6 +32,9 @@ public class ReimbursementMsg {
 	
 	@Inject
 	protected Validator validator;
+
+	@Inject
+	Event<Reimbursement> reimbursementEvent;
 
 	public Collection<Reimbursement> search (QueryParameter params) {
 		final CriteriaBuilder builder = em.getCriteriaBuilder();
@@ -87,6 +89,10 @@ public class ReimbursementMsg {
 		}
 		*/
 		final Reimbursement persistedReimbursement = em.merge(reimbursement);
+
+		// reimbursementEvent.fireAsync(persistedReimbursement);
+		reimbursementEvent.fire(persistedReimbursement);
+
 		return persistedReimbursement;
 	}
 	

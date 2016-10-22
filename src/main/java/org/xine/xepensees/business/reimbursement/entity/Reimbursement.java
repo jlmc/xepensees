@@ -145,6 +145,11 @@ public class Reimbursement implements Serializable {
 		return Objects.equals(id, other.id);
 	}
 	
+	@Override
+	public String toString() {
+		return "Reimbursement [id=" + id + ", version=" + version + ", date=" + date + "]";
+	}
+
 	public boolean contains(Expense expense) {
 		return expenses.contains(expense);
 	}

@@ -21,6 +21,15 @@
 	
 
 	<dependencies>
+		<!-- the next specification CDI enables @ObservesAsync with Event.fireAsync  -->
+		<!-- 
+		<dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <scope>provided</scope>
+            <version>2.0-EDR1</version>
+        </dependency>
+		 -->
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
