@@ -15,6 +15,7 @@ public class Bank {
 	@Inject
 	protected Logger logger;
 	
+
 	@Asynchronous
 	public void reimbursementToBePaid(@Observes Reimbursement event) {
 		waitAbit();
@@ -22,6 +23,7 @@ public class Bank {
 		logger.info("-- BankingService -- ");
 		logger.info("-- " + event);
 		logger.info("-------------------- ");
+
 	}
 	
 	/*

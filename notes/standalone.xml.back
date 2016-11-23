@@ -314,17 +314,9 @@
             <mail-session name="default" jndi-name="java:jboss/mail/Default">
                 <smtp-server outbound-socket-binding-ref="mail-smtp"/>
             </mail-session>
-            
-            <!-- custom email system -->
             <mail-session name="gmail" jndi-name="java:jboss/mail/gmail">
-                <smtp-server outbound-socket-binding-ref="mail-smtp-gmail" 
-                			 ssl="true" 
-                			 username="your-user@gmail.com" 
-                			 password="you-password"/>
+                <smtp-server outbound-socket-binding-ref="mail-smtp-gmail" ssl="true" username="xxxx@gmail.com" password="xxxx"/>
             </mail-session>
-            
-            <!-- endOf custom email system -->
-            
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:naming:2.0">
             <remote-naming/>
@@ -346,6 +338,14 @@
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:security:1.2">
             <security-domains>
+                <security-domain name="LIGHT_TRACKER_DOMAIN" cache-type="default">
+                    <authentication>
+                        <login-module code="UsersRoles" flag="required">
+                            <module-option name="usersProperties" value="${jboss.server.config.dir}/apps/light_tracker_user.properties"/>
+                            <module-option name="rolesProperties" value="${jboss.server.config.dir}/apps/light_tracker_roles.properties"/>
+                        </login-module>
+                    </authentication>
+                </security-domain>
                 <security-domain name="XEXPENSEES_SECUREDOMAIN" cache-type="default">
                     <authentication>
                         <login-module code="Database" flag="required">
@@ -451,11 +451,14 @@
         <outbound-socket-binding name="mail-smtp">
             <remote-destination host="localhost" port="25"/>
         </outbound-socket-binding>
-        <!-- custom gmail configuration -->
         <outbound-socket-binding name="mail-smtp-gmail">
             <remote-destination host="smtp.gmail.com" port="465"/>
         </outbound-socket-binding>
-        <!-- endOf custom gmail configuration -->
     </socket-binding-group>
 
+    <deployments>
+        <deployment name="xexpensees.war" runtime-name="xexpensees.war">
+            <content sha1="70c29e64a331d1cabc238858bc345ef934035e46"/>
+        </deployment>
+    </deployments>
 </server>
